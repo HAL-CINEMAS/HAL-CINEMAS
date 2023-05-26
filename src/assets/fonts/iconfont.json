@@ -1,0 +1,58 @@
+{
+  "id": "4089348",
+  "name": "no name",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2676290",
+      "name": "座位边框",
+      "font_class": "kexuanzuobiankuang",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "5912736",
+      "name": "座位",
+      "font_class": "zuowei",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "7463983",
+      "name": "座位",
+      "font_class": "zuowei1",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "13764758",
+      "name": "已选座位",
+      "font_class": "yixuanzuowei1",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "13764763",
+      "name": "座位",
+      "font_class": "zuowei2",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "8286046",
+      "name": "可选座位",
+      "font_class": "kexuanzuowei",
+      "unicode": "e699",
+      "unicode_decimal": 59033
+    },
+    {
+      "icon_id": "8286052",
+      "name": "已选座位",
+      "font_class": "yixuanzuowei",
+      "unicode": "e69a",
+      "unicode_decimal": 59034
+    }
+  ]
+}
