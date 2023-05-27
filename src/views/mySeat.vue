@@ -100,12 +100,12 @@ export default {
             width: 50%;
 
             i {
-              font-size: 25px;
+              font-size: 23px;
               margin-right: 10px;
             }
 
             span {
-              font-size: 20px;
+              font-size: 18px;
             }
           }
         }

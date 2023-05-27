@@ -1,5 +1,7 @@
 <template>
   <div class="seatContent">
+    <div class="screen"></div>
+    <p class="screenName">スクリーン:<i>{{ this.screen }}</i></p>
     <div class="seatTr" v-for="(row, rowIndex) in seatGrid" :key="rowIndex">
       <div class="seatTd" v-for="(seat, columnIndex) in row" :key="columnIndex" :class="{ 'selected': seat.selected }"
         @click="selectSeat(rowIndex, columnIndex, seat)">
@@ -14,12 +16,13 @@ export default {
   data() {
     return {
       seatGrid: [],
-      num1: 4,
-      num2: 16
+      screen: ''
     }
   },
   created() {
     this.generateSeatGrid()
+    const buyTicket = JSON.parse(localStorage.getItem('buyTicket'))
+    this.screen = buyTicket[1]
   },
   methods: {
     generateSeatGrid() {
@@ -49,6 +52,25 @@ export default {
 .seatContent {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  border: 1px solid #000;
+
+  .screen {
+    height: 10px;
+    width: 50%;
+    background-color: rgb(0, 0, 0);
+    margin: 10px 0 0 0;
+  }
+
+  .screenName {
+    font-size: 16px;
+
+    i {
+      color: red;
+      font-weight: 700;
+      font-style: normal;
+    }
+  }
 
   .seatTr {
     margin: 0 auto;
@@ -57,7 +79,7 @@ export default {
   .seatTr,
   .seatTd {
     display: inline-block;
-    font-size: 19px;
+    font-size: 19px !important;
   }
 
   .seatTr>.seatTd:nth-child(4) {

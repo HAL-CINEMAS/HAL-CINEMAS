@@ -407,6 +407,7 @@ export default {
             margin-top: 15px;
             margin-left: 20px;
             font-weight: 700;
+            font-size: 14px;
           }
 
           .city {
