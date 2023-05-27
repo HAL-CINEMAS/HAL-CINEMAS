@@ -148,8 +148,8 @@ export default {
     .card {
       color: inherit;
       cursor: pointer;
-      min-width: 200px;
-      min-height: 300px;
+      min-width: 230px;
+      min-height: 330px;
       perspective: 1000px;
       margin: 1rem;
       position: relative;
@@ -177,8 +177,8 @@ export default {
       justify-content: center;
       align-items: center;
       position: absolute;
-      height: 300px;
-      width: 200px;
+      height: 331px;
+      width: 234px;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
       transform-style: preserve-3d;
@@ -188,11 +188,11 @@ export default {
 
     .front {
       background-size: cover;
-      padding: 2rem;
+      // padding: 2rem;
       font-size: 15px;
       font-weight: 600;
       color: #fff;
-      overflow: hidden;
+      // overflow: hidden;
       font-family: Poppins, sans-serif;
 
     }
@@ -203,14 +203,18 @@ export default {
 
       .backTitle {
         font-weight: 700;
-        font-size: 15px;
+        font-size: 17px;
       }
 
       i {
         display: block;
-        font-size: 11px;
+        font-size: 15px;
         font-weight: 700;
         margin: 5px 0 5px 0;
+      }
+
+      p {
+        font-size: 12px;
       }
     }
 
