@@ -143,6 +143,7 @@ export default {
       margin-top: 0;
       margin-left: 1rem;
       margin-bottom: 3rem;
+      // margin-bottom: 3rem;
     }
 
     .card {
