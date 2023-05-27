@@ -23,7 +23,9 @@
           <h3>{{ this.ticketDetail[0] }}</h3>
           <p>日時</p>
           <h3>{{ this.ticketDetail[2] }}月{{ this.ticketDetail[3] }}日 ({{ this.ticketDetail[4] }})
-            {{ this.ticketDetail[5].start }}~{{ this.ticketDetail[5].end }}</h3>
+            <br>
+            {{ this.ticketDetail[5].start }}~{{ this.ticketDetail[5].end }}
+          </h3>
           <p>劇場</p>
           <h3>HAL シネマ</h3>
         </el-card>
@@ -50,7 +52,6 @@ export default {
   created() {
     const buyTicket = localStorage.getItem('buyTicket')
     this.ticketDetail = JSON.parse(buyTicket)
-    console.log(this.ticketDetail[5].end)
   }
 }
 </script>
@@ -59,6 +60,7 @@ export default {
 .seat {
   margin: 0 auto;
   width: 80%;
+  padding-bottom: 50px;
 
   .seatContent {
     margin: 0 auto;
@@ -75,6 +77,7 @@ export default {
       display: flex;
       justify-content: space-between;
       margin-top: 10px;
+      margin-bottom: 90px;
 
       .seatContentLeft {
         width: 70%;
@@ -113,7 +116,6 @@ export default {
         .leftMiddle {
           display: flex;
           justify-content: center;
-          padding-bottom: 20px;
 
           .seatDetail {
             width: 350px;
@@ -135,7 +137,7 @@ export default {
 
         h3 {
           margin-bottom: 20px;
-          font-size: 17px;
+          font-size: 16px;
         }
       }
     }

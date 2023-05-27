@@ -246,12 +246,12 @@ export default {
     rightButtonDisabled() {
       return this.displayEndIndex === this.items.length - 1
     },
-    // 获取当前以及接下来10天的时间
+    // 获取当前以及接下来7天的时间
     dates() {
       const dates = []
       const currentDate = new Date(this.startDate)
 
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 7; i++) {
         const dateString = currentDate.toLocaleDateString()
         const [, month, day] = dateString.split('/')
         const formattedDate = `${month}/${day}`
