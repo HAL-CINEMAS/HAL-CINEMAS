@@ -4,6 +4,7 @@ import router from './router'
 // UI導入
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+
 // vuex導入
 import store from './store/index.js'
 // font導入
