@@ -8,7 +8,10 @@
         <Aside></Aside>
       </el-aside>
       <el-main>
-        <router-view></router-view>
+        <!-- <button @click="test">按钮</button> -->
+        <el-scrollbar style="height: 100%;" ref="scrollbar">
+          <router-view></router-view>
+        </el-scrollbar>
       </el-main>
     </el-container>
   </el-container>
@@ -21,7 +24,15 @@ export default {
   components: {
     Header,
     Aside
+  },
+  created() {
+    this.$router.beforeEach((to, from, next) => {
+      this.$refs.scrollbar.wrap.scrollTop = 0
+
+      next()
+    })
   }
+
 }
 </script>
 
@@ -52,5 +63,9 @@ export default {
   background-color: #f5f5f5;
   height: 100%;
   // overflow: hidden;
+}
+
+.el-scrollbar__wrap {
+  overflow-x: hidden;
 }
 </style>
