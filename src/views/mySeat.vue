@@ -1,57 +1,57 @@
-<template>
+<template >
   <div class="seat">
     <SeatNav :process="0"></SeatNav>
     <div class="seatContent">
-      <p class="seatContentTop">お好きな座席をお選びください。</p>
+      <p class="seatContentTop">{{ this.message }}</p>
       <div class="seatContentMiddle">
         <el-card class="seatContentLeft">
-          <p class="leftTop">アイコン説明</p>
-          <div class="leftTopEX">
-            <div><i class="iconfont icon-zuowei"></i><span>空席（購入可能）</span></div>
-            <div><i class="iconfont icon-zuowei" style="color: red;"></i><span>選択した席</span></div>
-            <div>
-              <i class="iconfont icon-zuowei1"></i><span>購入済み／販売対象外</span>
-            </div>
-            <div><i class="iconfont icon-kexuanzuobiankuang"></i><span>プレミアボックスシート</span></div>
-          </div>
           <div class="leftMiddle">
-            <SeatDetail></SeatDetail>
+            <!-- 购票中间组件 -->
+            <router-view></router-view>
           </div>
         </el-card>
-        <el-card class="seatContentRight">
-          <p>作品</p>
-          <h3>{{ this.ticketDetail[0] }}</h3>
-          <p>日時</p>
-          <h3>{{ this.ticketDetail[2] }}月{{ this.ticketDetail[3] }}日 ({{ this.ticketDetail[4] }})
-            <br>
-            {{ this.ticketDetail[5].start }}~{{ this.ticketDetail[5].end }}
-          </h3>
-          <p>劇場</p>
-          <h3>HAL シネマ</h3>
-        </el-card>
+        <SeatRight></SeatRight>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import SeatNav from '../components/meSeatNav.vue'
-import SeatDetail from '../components/mySeatDetail.vue'
+import SeatNav from '../components/mySeatNav.vue'
+import SeatRight from '../components/mySeatRight.vue'
 export default {
 
   name: 'mySeat',
   data() {
     return {
-      ticketDetail: []
+      message: ''
     }
   },
   components: {
     SeatNav,
-    SeatDetail
+    SeatRight
+  },
+  methods: {
+    updateMessage() {
+      // 根据路由信息更新message
+      const routeName = this.$route.name
+      if (routeName === 'ticket1') {
+        this.message = 'お好きな座席をお選びください。'
+      } else if (routeName === 'ticket2') {
+        this.message = 'チケットの種類をお選びください。'
+      } else {
+        this.message = '其他组件'
+      }
+    }
+
+  },
+  watch: {
+    '$route'() {
+      this.updateMessage()
+    }
   },
   created() {
-    const buyTicket = localStorage.getItem('buyTicket')
-    this.ticketDetail = JSON.parse(buyTicket)
+    this.updateMessage()
   }
 }
 </script>
@@ -75,15 +75,12 @@ export default {
 
     .seatContentMiddle {
       display: flex;
-      justify-content: space-between;
       margin-top: 10px;
       margin-bottom: 90px;
 
       .seatContentLeft {
         width: 70%;
         background-color: #fff;
-        // border: 1px solid #000;
-        padding: 15px 10px;
 
         .leftTop {
           font-weight: 700;
@@ -92,7 +89,6 @@ export default {
 
         .leftTopEX {
           margin-top: 15px;
-          // width: 98%;
           height: 170px;
           border: 1px solid #bdbdbd;
           padding: 25px 0 0 25px;
@@ -114,30 +110,12 @@ export default {
         }
 
         .leftMiddle {
-          display: flex;
-          justify-content: center;
 
           .seatDetail {
             width: 350px;
             height: 450px;
             border: 1px solid #000;
           }
-        }
-      }
-
-      .seatContentRight {
-        width: 27%;
-        height: 60%;
-
-        p {
-          font-size: 15px;
-          color: #737373;
-          margin-bottom: 5px;
-        }
-
-        h3 {
-          margin-bottom: 20px;
-          font-size: 16px;
         }
       }
     }

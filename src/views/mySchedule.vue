@@ -161,6 +161,9 @@ export default {
     handleChange(val) {
 
     },
+    handleScroll() {
+      console.log('a')
+    },
 
     // 选择的具体信息
     buyTicket(e, item) {
@@ -170,7 +173,8 @@ export default {
       const mounth = this.getLeftPart(this.selectedDate)
       const day = this.getRightPart(this.selectedDate)
       const week = this.getWeekday(this.selectedDate)
-      const buyDetail = JSON.stringify([this.movieContent.title, size, mounth, day, week, time])
+      const obj = { mounth, day, week, ...time }
+      const buyDetail = JSON.stringify([this.movieContent.title, size, obj])
       localStorage.setItem('buyTicket', buyDetail)
       this.$router.push({
         name: 'seat'
@@ -230,8 +234,6 @@ export default {
 
     // 获得Movie传来的数据
     this.data = this.$route.params.data
-
-    // console.log(this.data)
   },
   computed: {
     // 数组slice选出开头和结尾的时间
