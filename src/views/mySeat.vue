@@ -1,6 +1,6 @@
 <template >
   <div class="seat">
-    <SeatNav :process="0"></SeatNav>
+    <SeatNav :process="getActive"></SeatNav>
     <div class="seatContent">
       <p class="seatContentTop">{{ this.message }}</p>
       <div class="seatContentMiddle">
@@ -10,7 +10,7 @@
             <router-view></router-view>
           </div>
         </el-card>
-        <SeatRight></SeatRight>
+        <SeatRight ref="SeatRight"></SeatRight>
       </div>
     </div>
   </div>
@@ -24,7 +24,8 @@ export default {
   name: 'mySeat',
   data() {
     return {
-      message: ''
+      message: '',
+      active: 0
     }
   },
   components: {
@@ -39,6 +40,8 @@ export default {
         this.message = 'お好きな座席をお選びください。'
       } else if (routeName === 'ticket2') {
         this.message = 'チケットの種類をお選びください。'
+      } else if (routeName === 'userinfo') {
+        this.message = 'ご購入に必要な情報を入力してください。'
       } else {
         this.message = '其他组件'
       }
@@ -52,6 +55,15 @@ export default {
   },
   created() {
     this.updateMessage()
+  },
+  computed: {
+    getActive() {
+      return this.$store.state.tab.active
+    }
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.$refs.SeatRight.buyTicket()
+    next()
   }
 }
 </script>
