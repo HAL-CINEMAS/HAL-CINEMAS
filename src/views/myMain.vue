@@ -28,7 +28,6 @@ export default {
   created() {
     this.$router.beforeEach((to, from, next) => {
       this.$refs.scrollbar.wrap.scrollTop = 0
-
       next()
     })
   }
