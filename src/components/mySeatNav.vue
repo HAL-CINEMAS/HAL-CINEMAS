@@ -49,6 +49,19 @@ export default {
       color: #b71c1c;
       border-color: #b71c1c;
     }
+
+    /deep/.el-step__head.is-finish {
+      color: #c0c4cc;
+      border-color: #c0c4cc;
+    }
+
+    /deep/.el-step__title.is-finish {
+      color: #c0c4cc;
+    }
+
+    /deep/.el-step__description.is-finish {
+      color: #c0c4cc;
+    }
   }
 }
 </style>
