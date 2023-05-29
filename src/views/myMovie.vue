@@ -44,7 +44,6 @@ export default {
   },
   methods: {
     buyTicket(movieC) {
-      // console.log(e)
       this.$router.push({
         name: 'Schedule',
         params: movieC

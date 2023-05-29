@@ -37,7 +37,7 @@
       </p>
     </div>
     <div class="submit">
-      <div class="submitFront" :class="{ 'backColor': !backChange }" @click="ticketBuy">席を選んで次へ</div>
+      <div class="submitFront" :class="{ 'backColor': !backChange }" @click="ticketBuy">席を選択して次へ</div>
       <router-link to="/schedule" style="text-decoration: none;">
         <div class="submitBack">時間指定画面へ戻る</div>
       </router-link>
@@ -83,6 +83,8 @@ export default {
     } else {
       this.generateSeatGrid(10, 7)
     }
+
+    this.$store.commit('activeChange', 0)
   },
   methods: {
     generateSeatGrid(R, C) {
