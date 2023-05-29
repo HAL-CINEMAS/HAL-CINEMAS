@@ -8,9 +8,21 @@
       <div class="ticketContentR">
         <div class="ticketItem" @click="ticketSelect(index)">
           <span v-if="item.click == false">券種を選択してください</span>
-          <span v-else-if="item.click == true">{{ item.ticketName }}{{ item.ticketMoney }}</span>
+          <span v-else-if="item.click == true" class="ticketButton"><span>{{ item.ticketName }}</span><span>{{
+            item.ticketMoney
+          }}円</span></span>
         </div>
       </div>
+    </div>
+    <div class="ticketAmount">
+      <span>合計</span>
+      <span>{{ getTicketAcount }}円</span>
+    </div>
+    <div class="submit">
+      <div class="submitFront" :class="{ 'backColor': backChange }" @click="toUserInfo">券種を選択して次へ</div>
+      <router-link to="ticket1" style="text-decoration: none;">
+        <div class="submitBack">戻る</div>
+      </router-link>
     </div>
     <el-dialog title="券種を選択してください" :visible.sync="dialogVisible" width="25%" :before-close="handleClose">
       <div class="ticketItemC" v-for="(value, key) in ticketType" :key="key" @click="getTicketType(key, value)">
@@ -28,9 +40,9 @@ export default {
     return {
       ticketList: [],
       dialogVisible: false,
-      ticketType: { 一般: '1,800', 大学生等: '1,600', '中学, 高校': '1,400', '小学生,幼児': '1,000' },
+      ticketType: { 一般: '1800', 大学生等: '1600', '中学, 高校': '1400', '小学生,幼児': '1000' },
       ticketChange: '',
-      ticketShow: ['', '', '', '']
+      localStorageData: []
     }
   },
   methods: {
@@ -42,7 +54,6 @@ export default {
       this.dialogVisible = false
     },
     getTicketType(key, value) {
-      console.log(key, value, this.ticketChange)
       this.ticketList.forEach((item, index) => {
         if (index === this.ticketChange) {
           item.click = true
@@ -51,16 +62,45 @@ export default {
         }
       })
       this.dialogVisible = false
+    },
+    toUserInfo() {
+      const newArr = []
+      this.ticketList.forEach((item) => {
+        newArr.push(item)
+      })
+      this.localStorageData[4] = newArr
+      localStorage.setItem('buyTicket', JSON.stringify(this.localStorageData))
+      if (this.backChange === false) return
+      this.$router.push({
+        name: 'userinfo'
+      })
+    },
+    createdR() {
+      const buyTicket = JSON.parse(localStorage.getItem('buyTicket'))
+      buyTicket[4] = []
+      this.localStorageData = buyTicket
+      const result = buyTicket[3].reduce((acc, item) => {
+        acc.push({ name: item, click: false, ticketName: '', ticketMoney: 0 })
+        return acc
+      }, [])
+      this.ticketList = result
+      this.$store.commit('activeChange', 0)
     }
   },
   created() {
-    const buyTicket = JSON.parse(localStorage.getItem('buyTicket'))
-    const result = buyTicket[3].reduce((acc, item) => {
-      acc.push({ name: item, click: false, ticketName: '', ticketMoney: '' })
-      return acc
-    }, [])
-    // console.log(result)
-    this.ticketList = result
+    this.createdR()
+  },
+  computed: {
+    getTicketAcount() {
+      return this.ticketList.reduce((accumulator, item) => accumulator + parseInt(item.ticketMoney), 0)
+    },
+
+    backChange() {
+      const ticketAllSelect = this.ticketList.every(item => {
+        return Object.keys(item.ticketName).length !== 0
+      })
+      return ticketAllSelect
+    }
   }
 }
 </script>
@@ -121,12 +161,78 @@ export default {
         border-radius: 5px;
         transition: all 0.3s;
         cursor: pointer;
+
+        .ticketButton {
+          display: flex;
+          justify-content: space-between;
+          padding: 0 40px;
+          background-color: #fff;
+          color: #0d47a1;
+          border: 1px solid #bdbdbd;
+          border-radius: 5px;
+          transition: all 0.3s;
+        }
+      }
+
+      .ticketButton:hover {
+        color: #bb2828;
       }
 
       .ticketItem:hover {
         background-color: #bb2828;
       }
     }
+  }
+
+  .submit {
+    font-size: 20px;
+    font-weight: 700;
+    width: 100%;
+    margin-top: 50px;
+
+    .submitFront,
+    .submitBack {
+      width: 60%;
+      margin: 0 auto;
+      padding: 9px 0;
+      text-align: center;
+      border: 1px solid #bdbdbd;
+      border-radius: 5px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .submitFront {
+      margin-bottom: 20px;
+      background-color: #666666;
+      color: #9a9a9a;
+
+    }
+
+    .backColor {
+      background-color: #bb2828;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s;
+
+    }
+
+    .backColor:hover {
+      background-color: #fff;
+      color: #b71c1c;
+      border: 1px solid #b71c1c;
+    }
+
+    .submitBack {
+      color: #626262;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .submitBack:hover {
+      background-color: #666666;
+      color: #fff;
+    }
+
   }
 
 }
@@ -168,5 +274,17 @@ export default {
 
 .ticketItemC:hover {
   color: #b71c1c;
+}
+
+.ticketAmount {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 50px;
+  border-bottom: 1px solid #bdbdbd;
+
+  span {
+    font-size: 25px;
+    font-weight: 700;
+  }
 }
 </style>
