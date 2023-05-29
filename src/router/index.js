@@ -39,7 +39,8 @@ const routes = [
         props: true,
         children: [
           { path: 'ticket1', name: 'ticket1', component: () => import('../views/mySeatDetail.vue') },
-          { path: 'ticket2', name: 'ticket2', component: () => import('../views/myTicket.vue') }
+          { path: 'ticket2', name: 'ticket2', component: () => import('../views/myTicket.vue') },
+          { path: 'userinfo', name: 'userinfo', component: () => import('../views/myUserInfo.vue') }
         ]
       }
     ]

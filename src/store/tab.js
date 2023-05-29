@@ -1,7 +1,8 @@
 export default {
   state: {
     isCollapse: false,
-    movieList: {}
+    movieList: {},
+    active: 0
   },
   mutations: {
     isCollapseChange(state) {
@@ -9,6 +10,9 @@ export default {
     },
     movieItemChange(state, movie) {
       state.movieList = movie
+    },
+    activeChange(state, num) {
+      state.active = num
     }
   }
 }
