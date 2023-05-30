@@ -2,14 +2,14 @@
   <div>
     <el-card class="seatContentRight">
       <p>作品</p>
-      <h3>{{ this.ticketDetail[0] }}</h3>
+      <h3>{{ ticketDetail[0] }}</h3>
       <p>日時</p>
-      <h3>{{ this.ticketDetail[2].mounth }}月{{ this.ticketDetail[2].day }}日 ({{ this.ticketDetail[2].week }})
+      <h3>{{ ticketDetail[2].mounth }}月{{ ticketDetail[2].day }}日 ({{ ticketDetail[2].week }})
         <br>
-        {{ this.ticketDetail[2].start }}~{{ this.ticketDetail[2].end }}
+        {{ ticketDetail[2].start }}~{{ ticketDetail[2].end }}
       </h3>
       <p>スクリーン</p>
-      <h3>{{ this.ticketDetail[1] }}</h3>
+      <h3>{{ ticketDetail[1] }}</h3>
       <p>座席・券種</p>
 
       <h3 v-if="ticketDetail[4] !== undefined">
@@ -49,7 +49,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .seatContentRight {
   margin-left: 20px;
 

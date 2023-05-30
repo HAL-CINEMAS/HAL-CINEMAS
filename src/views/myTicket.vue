@@ -69,6 +69,7 @@ export default {
         newArr.push(item)
       })
       this.localStorageData[4] = newArr
+      this.localStorageData[5] = this.getTicketAcount
       localStorage.setItem('buyTicket', JSON.stringify(this.localStorageData))
       if (this.backChange === false) return
       this.$router.push({

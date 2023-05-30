@@ -27,8 +27,8 @@
       <el-form-item label="">
         <el-form-item prop="pay">
           <el-radio-group v-model="ruleForm.pay" size="medium">
-            <el-radio label="クレジットカード"></el-radio>
-            <el-radio label="PayPay"></el-radio>
+            <el-radio border label="クレジットカード"></el-radio>
+            <el-radio border label="PayPay"></el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form-item>
@@ -37,6 +37,14 @@
         <!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
       </el-form-item>
     </el-form>
+    <div class="submit">
+      <router-link to="ticket2" style="text-decoration: none;">
+        <div class="submitBack">戻る</div>
+      </router-link>
+      <router-link to="/schedule" style="text-decoration: none;">
+        <div class="submitBack">購入を取り消して時間指定画面へ戻る</div>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -83,16 +91,15 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(this.ruleForm)
+          localStorage.setItem('userinfo', JSON.stringify(this.ruleForm))
+          this.$router.push({
+            name: 'pay'
+          })
         } else {
-          console.log('error submit!!')
           return false
         }
       })
     }
-    // resetForm(formName) {
-    //   this.$refs[formName].resetFields()
-    // }
   },
   created() {
     this.$store.commit('activeChange', 1)
@@ -106,6 +113,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 
   .title {
     width: 100%;
@@ -156,6 +164,57 @@ export default {
       border-bottom: 1px solid #e0e0e0;
       padding-bottom: 35px;
 
+    }
+
+  }
+
+  .submit {
+    font-size: 20px;
+    font-weight: 700;
+    width: 100%;
+    margin-top: 50px;
+
+    .submitFront,
+    .submitBack {
+      width: 60%;
+      margin: 0 auto;
+      padding: 9px 0;
+      text-align: center;
+      border: 1px solid #bdbdbd;
+      border-radius: 5px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .submitFront {
+      margin-bottom: 20px;
+      background-color: #666666;
+      color: #9a9a9a;
+    }
+
+    .backColor {
+      background-color: #bb2828;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s;
+
+    }
+
+    .backColor:hover {
+      background-color: #fff;
+      color: #b71c1c;
+      border: 1px solid #b71c1c;
+    }
+
+    .submitBack {
+      color: #626262;
+      transition: all 0.3s;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .submitBack:hover {
+      background-color: #666666;
+      color: #fff;
     }
 
   }
