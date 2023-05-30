@@ -3,9 +3,8 @@
     <el-steps :active="process">
       <el-step title="STEP1:" description="座席・チケット選択"></el-step>
       <el-step title="STEP2:" description="ご購入者情報の入力"></el-step>
-      <el-step title="STEP3:" description="お支払い情報の入力"></el-step>
-      <el-step title="STEP4:" description="購入内容の確認"></el-step>
-      <el-step title="STEP5:" description="購入完了"></el-step>
+      <el-step title="STEP3:" description="購入内容の確認"></el-step>
+      <el-step title="STEP4:" description="購入完了"></el-step>
     </el-steps>
   </div>
 </template>
