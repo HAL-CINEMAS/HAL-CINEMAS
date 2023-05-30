@@ -42,6 +42,16 @@ const routes = [
           { path: 'ticket2', name: 'ticket2', component: () => import('../views/myTicket.vue') },
           { path: 'userinfo', name: 'userinfo', component: () => import('../views/myUserInfo.vue') }
         ]
+      },
+      {
+        path: '/pay',
+        name: 'pay',
+        component: () => import('../views/myPay.vue')
+      },
+      {
+        path: '/payend',
+        name: 'payend',
+        component: () => import('../views/myPayend.vue')
       }
     ]
   }
