@@ -52,6 +52,16 @@ const routes = [
         path: '/payend',
         name: 'payend',
         component: () => import('../views/myPayend.vue')
+      },
+      {
+        path: '/allschedule',
+        name: 'allschedule',
+        component: () => import('../views/myAllSchedule.vue')
+      },
+      {
+        path: '/cinemas',
+        name: 'cinemas',
+        component: () => import('../views/myCinemas.vue')
       }
     ]
   }
