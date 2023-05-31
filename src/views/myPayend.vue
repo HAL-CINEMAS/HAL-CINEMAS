@@ -39,6 +39,7 @@ export default {
     font-size: 25px;
     font-weight: 400;
     margin-left: 15px;
+    // background-color: #666666;
   }
 
   .seatContent {

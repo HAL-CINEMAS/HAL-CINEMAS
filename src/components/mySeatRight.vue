@@ -24,7 +24,7 @@
       </h3>
 
       <p>劇場</p>
-      <h3>HAL シネマ</h3>
+      <h3>HAL シネマズ</h3>
     </el-card>
   </div>
 </template>

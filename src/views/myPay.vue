@@ -127,7 +127,7 @@ export default {
 
   .seatContent {
     margin: 0 auto;
-    width: 65%;
+    width: 75%;
     margin-top: 30px;
 
     .payContent {
@@ -174,9 +174,13 @@ export default {
         }
 
         h3 {
-          width: 200px;
-          text-align: right;
-          margin-bottom: 15px;
+          // width: 200px;
+          width: 100%;
+          text-align: center;
+          margin-bottom: 45px;
+          font-size: 18px;
+          background-color: #666666;
+          color: #fff;
         }
       }
     }

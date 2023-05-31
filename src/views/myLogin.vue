@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <h3 class="loginTop">HAL CINEMAS 会員</h3>
+    <Premium></Premium>
     <div class="loginContent">
       <div class="contentTitle">HAL&nbsp;CINEMAS会員IDでログイン</div>
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm" label-position="'left'">
@@ -18,7 +18,9 @@
       </el-form>
       <div class="loginButtom">
         <p>はじめての方は、会員登録が必要です</p>
-        <el-button type="primary" class="button">新規会員登録する(無料)<i class="el-icon-right"></i></el-button>
+        <router-link to="/register" style="text-decoration: none;">
+          <el-button type="primary" class="button">新規会員登録する(無料)<i class="el-icon-right"></i></el-button>
+        </router-link>
         <h3>© HAL CINEMAS Co., Ltd. All Rights Reserved.</h3>
       </div>
     </div>
@@ -26,7 +28,7 @@
 </template>
 
 <script>
-// import myTest from '../components/myTest.vue'
+import Premium from '../components/myPremium.vue'
 export default {
   name: 'myLogin',
   data() {
@@ -51,6 +53,9 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          this.$router.push({
+            name: 'user'
+          })
           alert('submit!')
         } else {
           console.log('error submit!!')
@@ -58,6 +63,9 @@ export default {
         }
       })
     }
+  },
+  components: {
+    Premium
   }
 }
 </script>
@@ -71,7 +79,6 @@ export default {
 
   .loginTop {
     padding: 10px 0 10px 45px;
-    // background-color: skyblue;
     font-size: 20px;
     border-bottom: 1px solid #000000;
     font-family: 'Courier New', Courier, monospace;

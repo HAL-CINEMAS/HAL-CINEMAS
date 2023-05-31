@@ -168,7 +168,7 @@ export default {
       padding: 25px 0 0 25px;
 
       div {
-        margin-bottom: 20px;
+        margin-bottom: 40px;
         display: inline-block;
         width: 50%;
 

@@ -33,7 +33,7 @@
                   <template slot="title">
                     <div style="width: 100%;padding-bottom: 10px;border-bottom: 1px solid #bdbdbd;" @click="show">
                       <p class="city">[名古屋市]</p>
-                      <p class="cinemas">HALシネマ</p>
+                      <p class="cinemas">HALシネマズ</p>
                     </div>
                   </template>
                   <div class="times">
