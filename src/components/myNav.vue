@@ -2,8 +2,9 @@
   <div>
     <div class="nav">
       <span @click="navChange('/movie')" :class="$route.path === '/movie' ? 'active' : ''">映画一覧<i>Films List</i></span>
-      <span @click="navChange('/login')" :class="$route.path === '/login' ? 'active' : ''">スケジュール<i>Schedule</i></span>
-      <span @click="navChange('/user')" :class="$route.path === '/user' ? 'active' : ''">施設情報<i>Cinema
+      <span @click="navChange('/allschedule')"
+        :class="$route.path === '/allschedule' ? 'active' : ''">スケジュール<i>Schedule</i></span>
+      <span @click="navChange('/cinemas')" :class="$route.path === '/cinemas' ? 'active' : ''">施設情報<i>Cinema
           Lnformation</i></span>
     </div>
   </div>
