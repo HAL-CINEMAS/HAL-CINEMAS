@@ -21,23 +21,33 @@ export default {
           path: '/home',
           name: 'home',
           label: 'トップページ',
-          icon: 'el-icon-s-home',
-          url: 'my-home.vue'
+          icon: 'el-icon-s-home'
         },
         {
           path: '/login',
           name: 'login',
           label: 'ログイン',
-          icon: 'el-icon-user-solid',
-          url: 'my-mall.vue'
+          icon: 'el-icon-user-solid'
         },
         {
           path: '/movie',
           name: 'movie',
           label: '作品を探す',
-          icon: 'el-icon-film',
-          url: 'my-user.vue'
-        }]
+          icon: 'el-icon-film'
+        },
+        {
+          path: '/allschedule',
+          name: 'allschedule',
+          label: 'スゲージュル',
+          icon: 'el-icon-video-camera-solid'
+        },
+        {
+          path: '/cinemas',
+          name: 'cinemas',
+          label: '施設情報',
+          icon: 'el-icon-s-finance'
+        }
+      ]
     }
   },
   methods: {
