@@ -62,6 +62,20 @@ const routes = [
         path: '/cinemas',
         name: 'cinemas',
         component: () => import('../views/myCinemas.vue')
+      },
+      {
+        path: '/register',
+        name: 'register',
+        component: () => import('../views/myRegister.vue'),
+        redirect: 'register/step1',
+        children: [
+          { path: 'step1', name: 'ticket1', component: () => import('../views/register/myRegisterStep1.vue') }
+        ]
+      },
+      {
+        path: '/user',
+        name: 'user',
+        component: () => import('../views/myUser.vue')
       }
     ]
   }
