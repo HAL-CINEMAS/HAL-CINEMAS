@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4089348 */
-  src: url('iconfont.woff2?t=1685101083460') format('woff2'),
-       url('iconfont.woff?t=1685101083460') format('woff'),
-       url('iconfont.ttf?t=1685101083460') format('truetype');
+  src: url('iconfont.woff2?t=1685641692298') format('woff2'),
+       url('iconfont.woff?t=1685641692298') format('woff'),
+       url('iconfont.ttf?t=1685641692298') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,62 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-huafei:before {
+  content: "\e600";
+}
+
+.icon-shouji:before {
+  content: "\e601";
+}
+
+.icon-wxbdingwei:before {
+  content: "\e624";
+}
+
+.icon-xingming:before {
+  content: "\e635";
+}
+
+.icon-calendar:before {
+  content: "\e6d8";
+}
+
+.icon-xingbie:before {
+  content: "\e62d";
+}
+
+.icon-youxiang:before {
+  content: "\e908";
+}
+
+.icon-gender:before {
+  content: "\e63e";
+}
+
+.icon-chushengriqi:before {
+  content: "\e64a";
+}
+
+.icon-zhuzhi:before {
+  content: "\e6c2";
+}
+
+.icon-zuoxixingming:before {
+  content: "\e672";
+}
+
+.icon-ziyuanxhdpi:before {
+  content: "\e648";
+}
+
+.icon-shengri:before {
+  content: "\e641";
+}
+
+.icon-dingwei:before {
+  content: "\e8ae";
 }
 
 .icon-kexuanzuobiankuang:before {
