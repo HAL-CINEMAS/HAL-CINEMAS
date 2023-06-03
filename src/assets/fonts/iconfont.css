@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4089348 */
-  src: url('iconfont.woff2?t=1685641692298') format('woff2'),
-       url('iconfont.woff?t=1685641692298') format('woff'),
-       url('iconfont.ttf?t=1685641692298') format('truetype');
+  src: url('iconfont.woff2?t=1685670266386') format('woff2'),
+       url('iconfont.woff?t=1685670266386') format('woff'),
+       url('iconfont.ttf?t=1685670266386') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,46 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-shoucang2:before {
+  content: "\e60a";
+}
+
+.icon-shoucang3:before {
+  content: "\e906";
+}
+
+.icon-qianbao:before {
+  content: "\e62c";
+}
+
+.icon-shoucang4:before {
+  content: "\e6d9";
+}
+
+.icon-goumaijilu1:before {
+  content: "\e6c6";
+}
+
+.icon-shoucang:before {
+  content: "\e609";
+}
+
+.icon-shoucang1:before {
+  content: "\e666";
+}
+
+.icon-jifen:before {
+  content: "\e645";
+}
+
+.icon-powerpoint:before {
+  content: "\e619";
+}
+
+.icon-goumaijilu:before {
+  content: "\e64d";
 }
 
 .icon-huafei:before {
