@@ -17,12 +17,7 @@ export default {
       active: {}
     }
   },
-  props: ['process'],
-
-  created() {
-    const buyTicket = localStorage.getItem('buyTicket')
-    this.ticketDetail = buyTicket
-  }
+  props: ['process']
 }
 </script>
 
