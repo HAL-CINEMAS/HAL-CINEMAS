@@ -15,6 +15,6 @@ export default {
   padding: 10px 0 10px 45px;
   font-size: 20px;
   border-bottom: 1px solid #000000;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Noto Sans JP', sans-serif;
 }
 </style>
