@@ -69,7 +69,9 @@ const routes = [
         component: () => import('../views/myRegister.vue'),
         redirect: 'register/step1',
         children: [
-          { path: 'step1', name: 'ticket1', component: () => import('../views/register/myRegisterStep1.vue') }
+          { path: 'step1', name: 'step1', component: () => import('../views/register/myRegisterStep1.vue') },
+          { path: 'step2', name: 'step2', component: () => import('../views/register/myRegisterStep2.vue') },
+          { path: 'step3', name: 'step3', component: () => import('../views/register/myRegisterStep3.vue') }
         ]
       },
       {
