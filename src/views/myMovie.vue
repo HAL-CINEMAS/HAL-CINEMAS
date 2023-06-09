@@ -33,7 +33,10 @@
 
 <script>
 import myNav from '../components/myNav.vue'
-import { getMovieList } from '../api/index.js'
+import fetchData from '../api/index.js'
+
+const data = await fetchData()
+
 export default {
   name: 'myMovie',
   data() {
@@ -56,9 +59,7 @@ export default {
     myNav
   },
   created() {
-    getMovieList().then((res) => {
-      this.movieList = res.data.movieList
-    })
+    this.movieList = data
   }
 }
 </script>
