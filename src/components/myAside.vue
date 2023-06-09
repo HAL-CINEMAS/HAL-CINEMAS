@@ -38,7 +38,7 @@ export default {
         {
           path: '/allschedule',
           name: 'allschedule',
-          label: 'スゲージュル',
+          label: 'スケジュール',
           icon: 'el-icon-video-camera-solid'
         },
         {
