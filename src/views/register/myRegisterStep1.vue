@@ -6,6 +6,9 @@
         <el-input v-model="ruleForm.mail"></el-input>
         <p>設定後の変更は出来ません。</p>
       </el-form-item>
+      <el-form-item label="パスワード" prop="pass">
+        <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+      </el-form-item>
       <el-form-item label="ユーザー名" prop="username">
         <el-input v-model="ruleForm.username"></el-input>
       </el-form-item>
@@ -65,6 +68,7 @@ export default {
     return {
       ruleForm: {
         mail: '',
+        pass: null,
         username: '',
         name: '',
         sex: '',
@@ -77,6 +81,9 @@ export default {
       rules: {
         mail: [
           { required: true, message: 'メールアドレスを入力してください。', trigger: 'blur' }
+        ],
+        pass: [
+          { required: true, message: 'パスワードを入力してください。', trigger: 'blur' }
         ],
         username: [
           { required: true, message: 'ユーザー名を入力してください。', trigger: 'blur' }
