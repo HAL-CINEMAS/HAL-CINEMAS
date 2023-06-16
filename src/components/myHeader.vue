@@ -6,16 +6,32 @@
       <span v-else>{{ 'メニュー' }}</span>
     </div>
     <div class="logo"><img src="../assets/images/logo1.png" alt=""><span>HAL <i>CINEMAS</i></span></div>
+    <div class="login">{{ loginid }}</div>
   </div>
 </template>
 
 <script>
+import app from '@/api/firebase.js'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+
 export default {
   name: 'myHeader',
   data() {
     return {
-      menuItem: false
+      menuItem: false,
+      loginid: 'null'
     }
+  },
+  mounted() {
+    const auth = getAuth(app)
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid
+        this.loginid = uid
+      } else {
+        console.log('dont login')
+      }
+    })
   },
   methods: {
     menuChange() {
@@ -39,6 +55,13 @@ export default {
   background-color: #212121;
   height: 50px;
   padding: 0 10px;
+
+  .login {
+      color: #a6a6a6;
+      margin-left: auto;
+      margin-right: 20px;
+      display: block;
+    }
 
   .menu {
     height: 100%;

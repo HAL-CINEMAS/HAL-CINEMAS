@@ -12,8 +12,9 @@
           <el-input type="password" v-model="ruleForm.ps" placeholder="パスワード"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button style="width: 100%;" type="primary" @click="submitForm('ruleForm')">ログインする<i
-              class="el-icon-right button"></i></el-button>
+          <el-button style="width: 100%;" type="primary" @click="submitForm('ruleForm')">ログインする
+            <i class="el-icon-right button"></i>
+          </el-button>
         </el-form-item>
       </el-form>
       <div class="loginButtom">
@@ -29,6 +30,8 @@
 
 <script>
 import Premium from '../components/myPremium.vue'
+import app from '@/api/firebase.js'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 export default {
   name: 'myLogin',
   data() {
@@ -51,17 +54,32 @@ export default {
   },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.$router.push({
-            name: 'user'
-          })
-          alert('submit!')
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
+      // this.$refs[formName].validate((valid) => {
+      //   if (valid) {
+      //     this.$router.push({
+      //       name: 'user'
+      //     })
+      //     console.log(formName)
+      //   } else {
+      //     console.log('error submit!!')
+      //     return false
+      //   }
+      // })
+
+      const auth = getAuth(app)
+      const email = 'test@gmail.com'
+      const password = 'hogehoge'
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user
+          console.log(user)
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code
+          console.log(errorCode)
+        })
     }
   },
   components: {
