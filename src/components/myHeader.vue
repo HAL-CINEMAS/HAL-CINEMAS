@@ -6,7 +6,20 @@
       <span v-else>{{ 'メニュー' }}</span>
     </div>
     <div class="logo"><img src="../assets/images/logo1.png" alt=""><span>HAL <i>CINEMAS</i></span></div>
-    <div class="login">{{ loginid }}</div>
+    <div class="login">
+      <el-dropdown @command="userAction">
+        <span class="el-dropdown-link">
+          {{ loginid }}<i class=" el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="a">XXX</el-dropdown-item>
+          <el-dropdown-item command="b">XXX</el-dropdown-item>
+          <el-dropdown-item command="c">XXX</el-dropdown-item>
+          <el-dropdown-item command="d">XXX</el-dropdown-item>
+          <el-dropdown-item command="e">ログアウト</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
   </div>
 </template>
 
@@ -39,7 +52,12 @@ export default {
       this.$store.commit('isCollapseChange')
       this.menuItem = this.getMenuChange
       // console.log(this.menuItem)
+    },
+    userAction() {
+      // ログアウトの操作はこちに入れる
+      console.log('a')
     }
+
   },
   computed: {
     getMenuChange() {
@@ -58,11 +76,10 @@ export default {
   padding: 0 10px;
 
   .login {
-      color: #a6a6a6;
-      margin-left: auto;
-      margin-right: 20px;
-      display: block;
-    }
+    margin-left: auto;
+    margin-right: 20px;
+    display: block;
+  }
 
   .menu {
     height: 100%;
@@ -105,6 +122,10 @@ export default {
         color: #d7102a;
       }
     }
+  }
+
+  .el-dropdown {
+    color: #fff;
   }
 }
 </style>
