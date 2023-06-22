@@ -28,8 +28,8 @@ import { getFirestore, doc, setDoc, serverTimestamp, Timestamp } from 'firebase/
 export default {
   data() {
     return {
-      title: [{ name: 'メールアドレス', icon: 'youxiang', user: 'username' }, { name: 'ユーザー名', icon: 'ziyuanxhdpi', user: 'name' }, { name: '氏名', icon: 'zuoxixingming', user: 'mail' }, { name: '性別', icon: 'xingbie', user: 'sex' }, { name: '生年月日', icon: 'calendar', user: 'birth' }, { name: '都道府県', icon: 'dingwei', user: 'address' }, { name: '電話番号', icon: 'shouji', user: 'phone' }],
-      registerInfo: []
+      title: [{ name: 'メールアドレス', icon: 'youxiang', user: 'username' }, { name: 'パスワード', icon: 'xingming', user: 'pass' }, { name: 'ユーザー名', icon: 'ziyuanxhdpi', user: 'name' }, { name: '氏名', icon: 'zuoxixingming', user: 'mail' }, { name: '性別', icon: 'xingbie', user: 'sex' }, { name: '生年月日', icon: 'calendar', user: 'birth' }, { name: '都道府県', icon: 'dingwei', user: 'address' }, { name: '電話番号', icon: 'shouji', user: 'phone' }],
+      reigisterInfo: []
     }
   },
   methods: {
