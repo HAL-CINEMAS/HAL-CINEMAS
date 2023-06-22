@@ -18,8 +18,7 @@
         </el-tab-pane>
         <el-tab-pane>
           <span slot="label"><i class="iconfont icon-goumaijilu"></i> 購入履歴</span>
-          <el-descriptions v-for="item in 3" :key="item" class="margin-top" :column="3" :size="size"
-            style="margin-top: 20px;" border>
+          <el-descriptions v-for="item in 3" :key="item" class="margin-top" :column="3" style="margin-top: 20px;" border>
             <template slot="extra">
               <el-button type="primary" size="small">操作</el-button>
             </template>
