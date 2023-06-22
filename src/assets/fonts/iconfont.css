@@ -1,0 +1,139 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 4089348 */
+  src: url('iconfont.woff2?t=1685670266386') format('woff2'),
+       url('iconfont.woff?t=1685670266386') format('woff'),
+       url('iconfont.ttf?t=1685670266386') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-shoucang2:before {
+  content: "\e60a";
+}
+
+.icon-shoucang3:before {
+  content: "\e906";
+}
+
+.icon-qianbao:before {
+  content: "\e62c";
+}
+
+.icon-shoucang4:before {
+  content: "\e6d9";
+}
+
+.icon-goumaijilu1:before {
+  content: "\e6c6";
+}
+
+.icon-shoucang:before {
+  content: "\e609";
+}
+
+.icon-shoucang1:before {
+  content: "\e666";
+}
+
+.icon-jifen:before {
+  content: "\e645";
+}
+
+.icon-powerpoint:before {
+  content: "\e619";
+}
+
+.icon-goumaijilu:before {
+  content: "\e64d";
+}
+
+.icon-huafei:before {
+  content: "\e600";
+}
+
+.icon-shouji:before {
+  content: "\e601";
+}
+
+.icon-wxbdingwei:before {
+  content: "\e624";
+}
+
+.icon-xingming:before {
+  content: "\e635";
+}
+
+.icon-calendar:before {
+  content: "\e6d8";
+}
+
+.icon-xingbie:before {
+  content: "\e62d";
+}
+
+.icon-youxiang:before {
+  content: "\e908";
+}
+
+.icon-gender:before {
+  content: "\e63e";
+}
+
+.icon-chushengriqi:before {
+  content: "\e64a";
+}
+
+.icon-zhuzhi:before {
+  content: "\e6c2";
+}
+
+.icon-zuoxixingming:before {
+  content: "\e672";
+}
+
+.icon-ziyuanxhdpi:before {
+  content: "\e648";
+}
+
+.icon-shengri:before {
+  content: "\e641";
+}
+
+.icon-dingwei:before {
+  content: "\e8ae";
+}
+
+.icon-kexuanzuobiankuang:before {
+  content: "\e63a";
+}
+
+.icon-zuowei:before {
+  content: "\e613";
+}
+
+.icon-zuowei1:before {
+  content: "\e62f";
+}
+
+.icon-yixuanzuowei1:before {
+  content: "\e616";
+}
+
+.icon-zuowei2:before {
+  content: "\e618";
+}
+
+.icon-kexuanzuowei:before {
+  content: "\e699";
+}
+
+.icon-yixuanzuowei:before {
+  content: "\e69a";
+}
+
