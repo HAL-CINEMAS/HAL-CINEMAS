@@ -13,7 +13,7 @@ async function fetchData() {
     const month = date.getMonth() + 1
     const day = date.getDate()
     const formattedDate = `${year}年${month}月${day}日`
-    const updatedData = { ...doc.data(), data: formattedDate }
+    const updatedData = { ...doc.data(), data: formattedDate, id: doc.id }
     datalist.push(updatedData)
   })
   return datalist
