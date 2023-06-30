@@ -220,6 +220,7 @@ export default {
     changeColor(item, index) {
       this.activeIndex = index
       this.selectedDate = item
+      // console.log(this.movieContent)
     }
   },
   created() {
