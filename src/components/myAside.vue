@@ -4,7 +4,7 @@
       active-text-color="#ffd04b" :collapse="getMenuChange">
       <el-menu-item :index="item.name" v-for="item in  menuData " :key="item.name" @click="menuLink(item)">
         <i :class="`${item.icon}`"></i>
-        <span slot="title">{{ item.label }}</span>
+        <span slot="title">{{ getUserid && item.name === 'login' ? 'マイページ' : item.label }}</span>
       </el-menu-item>
     </el-menu>
   </div>
@@ -54,12 +54,20 @@ export default {
     menuLink(item) {
       // console.log(this.$route.path)
       if (item.path === this.$route.path) return
-      this.$router.push(item.path)
+      if (item.path === '/login' && this.$route.path === '/user') return
+      if (item.path === '/login' && this.getUserid) {
+        this.$router.push({
+          name: 'user'
+        })
+      } else { this.$router.push(item.path) }
     }
   },
   computed: {
     getMenuChange() {
       return this.$store.state.tab.isCollapse
+    },
+    getUserid() {
+      return this.$store.state.tab.uid
     }
   }
 }
