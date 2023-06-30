@@ -211,7 +211,6 @@ export default {
       if (screenTemp.S1.length !== 0) { this.screen.push({ num: 'S1', size: '小', times: screenTemp.S1 }) }
       if (screenTemp.S2.length !== 0) { this.screen.push({ num: 'S2', size: '小', times: screenTemp.S2 }) }
       if (screenTemp.S3.length !== 0) { this.screen.push({ num: 'S3', size: '小', times: screenTemp.S3 }) }
-
     }
   },
   created() {
