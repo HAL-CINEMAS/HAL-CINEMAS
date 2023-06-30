@@ -76,6 +76,7 @@ export default {
           const user = userCredential.user
           console.log(user)
           // ...
+          this.$router.push('/user')
         })
         .catch((error) => {
           const errorCode = error.code
