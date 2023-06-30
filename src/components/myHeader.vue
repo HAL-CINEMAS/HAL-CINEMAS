@@ -26,7 +26,6 @@
 <script>
 import app from '@/api/firebase.js'
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
-// import { getAuth, signOut } from 'firebase/auth'
 
 export default {
   name: 'myHeader',
