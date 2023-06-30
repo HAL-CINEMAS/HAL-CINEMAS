@@ -21,11 +21,6 @@ const routes = [
         component: () => import('../views/myLogin.vue')
       },
       {
-        path: '/logout',
-        name: 'logout',
-        component: () => import('../views/myLogout.vue')
-      },
-      {
         path: '/movie',
         name: 'movie',
         component: () => import('../views/myMovie.vue')

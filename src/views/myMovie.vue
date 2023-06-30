@@ -39,8 +39,7 @@ export default {
   name: 'myMovie',
   data() {
     return {
-      movieList: [
-      ]
+      movieList: []
     }
   },
   methods: {
