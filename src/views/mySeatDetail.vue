@@ -19,8 +19,10 @@
         <div class="seatTd" v-for="(  seat, columnIndex  ) in   row  " :key="columnIndex" :class="{
           'selected': seat.selected, 'add-style': (screenFirst === 'L' && (columnIndex === 3 || columnIndex === 15)) || (screenFirst === 'M' && (columnIndex === 1 || columnIndex === 9))
         }
-          " @click="selectSeat(rowIndex, columnIndex, seat)">
-          <i class="iconfont icon-zuowei"></i>
+          ">
+          <!-- 动态显示被购买的座位 -->
+          <i v-if="seat.buy === false" class="iconfont icon-zuowei" @click="selectSeat(rowIndex, columnIndex, seat)"></i>
+          <i v-else disabled class="iconfont icon-zuowei1" style="pointer-events: none;" @click.stop></i>
         </div>
       </div>
     </div>
@@ -73,6 +75,7 @@ export default {
     }
   },
   created() {
+    // 根据传来的参数动态显示屏幕
     const buyTicket = JSON.parse(localStorage.getItem('buyTicket'))
     this.screen = buyTicket[1]
     this.screenFirst = buyTicket[1][0]
@@ -87,6 +90,7 @@ export default {
     this.$store.commit('activeChange', 0)
   },
   methods: {
+    // 动态生成座位
     generateSeatGrid(R, C) {
       const alphabet = 'ABCDEFGHIJ'
 
@@ -96,17 +100,19 @@ export default {
 
         for (let column = 1; column <= C; column++) {
           const seatLabel = `${rowLabel}${column}`
-          seatRow.push({ row: rowLabel, column, label: seatLabel, selected: false })
+          seatRow.push({ row: rowLabel, column, label: seatLabel, selected: false, buy: false })
         }
 
         this.seatGrid.push(seatRow)
       }
     },
+    // 底部已选择的方法
     selectSeat(rowIndex, columnIndex, seat) {
       if (this.selected.length > 5 && !this.seatGrid[rowIndex][columnIndex].selected) {
         return alert('選択できる席は、6席までです。')
       }
       this.seatGrid[rowIndex][columnIndex].selected = !this.seatGrid[rowIndex][columnIndex].selected
+      console.log(seat)
       // 点击座位显示在最底下
       if (this.seatGrid[rowIndex][columnIndex].selected) {
         this.selected.push(seat.label)
@@ -116,6 +122,7 @@ export default {
         })
       }
     },
+    // 清楚选择座位
     selectClear() {
       this.selected = []
       this.seatGrid.forEach((item) => {
@@ -124,6 +131,7 @@ export default {
         })
       })
     },
+    // 购买进入下一步
     ticketBuy() {
       if (this.selected.length === 0) return
       const buyTicket = JSON.parse(localStorage.getItem('buyTicket'))
