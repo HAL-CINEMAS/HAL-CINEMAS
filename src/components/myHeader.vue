@@ -26,6 +26,7 @@
 <script>
 import app from '@/api/firebase.js'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
+// import { getAuth, signOut } from 'firebase/auth'
 
 export default {
   name: 'myHeader',
@@ -61,6 +62,9 @@ export default {
       } else if (item === 'e') {
         // ログアウトの操作はこちに入れる
         alert('ログアウト')
+        this.$router.push({
+          name: 'home'
+        })
       }
     }
 
