@@ -6,6 +6,12 @@
       <p>ご注文確認メールをご登録いただきましたメールアドレスに送りいらしましたので、ご確認ください。</p>
       <p>メールが届かない場合は、マイページのご注文履歴から状況を確認いただくことが可能です。</p>
       <div class="order"><span class="left">注文番号:</span><span class="right">230524851032</span></div>
+      <!-- 添加前往个人主页 -->
+      <div class="submit">
+        <router-link to="/user" style="text-decoration: none;">
+          <div class="right">マイページへ</div>
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -34,12 +40,10 @@ export default {
   width: 80%;
   padding-bottom: 50px;
 
-  // background-color: pink;
   .seatContentTop {
     font-size: 25px;
     font-weight: 400;
     margin-left: 15px;
-    // background-color: #666666;
   }
 
   .seatContent {
