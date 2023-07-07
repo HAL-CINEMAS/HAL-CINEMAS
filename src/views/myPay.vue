@@ -105,7 +105,7 @@ export default {
     },
 
     addticket() {
-      // const data = this.userinfo
+      console.log('success')
       addDoc(collection(db, 'ticket'), {
         test: 'test',
         timestamp: serverTimestamp()
@@ -115,7 +115,9 @@ export default {
         console.log(errorCode)
         console.log(errorMessage)
       })
-      this.$router.push('/register/payend')
+      this.$router.push({
+        name: 'payend'
+      })
     }
   },
   computed: {

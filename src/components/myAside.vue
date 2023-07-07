@@ -52,7 +52,6 @@ export default {
   },
   methods: {
     menuLink(item) {
-      console.log(this.$route.path)
       if (item.path === this.$route.path) return
       if (item.path === '/login' && this.$route.path === '/user') return
       if (item.path === '/login' && this.getUserid) {

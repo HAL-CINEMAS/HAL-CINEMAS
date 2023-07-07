@@ -88,6 +88,8 @@ export default {
     }
 
     this.$store.commit('activeChange', 0)
+
+    // localStorage.setItem('seat',)
   },
   methods: {
     // 动态生成座位
@@ -102,7 +104,7 @@ export default {
           const seatLabel = `${rowLabel}${column}`
           seatRow.push({ row: rowLabel, column, label: seatLabel, selected: false, buy: false })
         }
-
+        // 将作为假设的放入本地
         this.seatGrid.push(seatRow)
       }
     },
@@ -186,7 +188,7 @@ export default {
         }
 
         span {
-          font-size: 18px;
+          font-size: 17px;
         }
       }
     }
@@ -241,7 +243,7 @@ export default {
   .seatTr,
   .seatTd {
     display: inline-block;
-    font-size: 19px !important;
+    font-size: 1.18em !important;
   }
 
   .seatTd {

@@ -195,7 +195,7 @@ export default {
     h3 {
       font-size: 13px;
       color: #c92323;
-      margin-top: 275px;
+      margin-top: 90px;
     }
   }
 

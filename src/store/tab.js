@@ -25,7 +25,6 @@ export default {
       } else {
         state.uid = false
       }
-      console.log(state.uid)
     }
   }
 }
