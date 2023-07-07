@@ -75,6 +75,35 @@ export default {
       }
     }
 
+    .submit {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      width: 100%;
+      margin-top: 50px;
+
+      .right {
+        width: 200px;
+        margin: 0 auto;
+        padding: 9px 0;
+        text-align: center;
+        border: 1px solid transparent;
+        border-radius: 5px;
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #bb2828;
+        color: #fff;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .right:hover {
+        background-color: #fff;
+        color: #b71c1c;
+        border: 1px solid #b71c1c;
+      }
+    }
+
   }
 }
 </style>

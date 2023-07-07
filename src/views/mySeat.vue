@@ -91,7 +91,7 @@ export default {
       margin-bottom: 90px;
 
       .seatContentLeft {
-        width: 70%;
+        width: 80%;
         background-color: #fff;
 
         .leftTop {

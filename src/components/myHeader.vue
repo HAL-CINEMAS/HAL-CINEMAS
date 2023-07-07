@@ -39,11 +39,11 @@ export default {
     const auth = getAuth(app)
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const uid = user.uid
+        const uid = user.email
         this.loginid = uid
         this.$store.commit('useridSave', uid)
       } else {
-        this.loginid = 'null'
+        this.loginid = 'ログイン'
         console.log('dont login')
       }
     })
@@ -86,7 +86,6 @@ export default {
           console.log('error', error)
         })
     }
-
   },
   computed: {
     getMenuChange() {
