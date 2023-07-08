@@ -40,7 +40,7 @@ export default {
     return {
       ticketList: [],
       dialogVisible: false,
-      ticketType: { 一般: '1800', 大学生等: '1600', '中学, 高校': '1400', '小学生,幼児': '1000' },
+      ticketType: { 一般: '1,800', 大学生等: '1,600', '中学, 高校': '1,400', '小学生,幼児': '1,000' },
       ticketChange: '',
       localStorageData: []
     }
@@ -93,7 +93,15 @@ export default {
   },
   computed: {
     getTicketAcount() {
-      return this.ticketList.reduce((accumulator, item) => accumulator + parseInt(item.ticketMoney), 0)
+      // return this.ticketList.reduce((accumulator, item) => accumulator + parseInt(item.ticketMoney), 0)
+      let num = 0
+      this.ticketList.forEach((item) => {
+        if (typeof item.ticketMoney === 'string') {
+          const money = item.ticketMoney.replace(',', '')
+          num += parseInt(money)
+        }
+      })
+      return num.toLocaleString()
     },
 
     backChange() {
@@ -113,7 +121,7 @@ export default {
 
   .ticketContent {
     display: flex;
-    width: 800px;
+    // width: 800px;
     height: 150px;
     border: 1px solid #bababa;
     margin: 15px 10px;
@@ -122,7 +130,7 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 30%;
+      width: 25%;
       height: 100%;
 
       img {
@@ -138,21 +146,21 @@ export default {
     .ticketContentL::after {
       content: '';
       position: relative;
-      right: -48px;
+      right: -23px;
       width: 1px;
       height: 65%;
       background-color: #e0e0e0;
     }
 
     .ticketContentR {
-      width: 70%;
+      width: 75%;
       height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
 
       .ticketItem {
-        width: 430px;
+        width: 80%;
         height: 62px;
         text-align: center;
         line-height: 62px;

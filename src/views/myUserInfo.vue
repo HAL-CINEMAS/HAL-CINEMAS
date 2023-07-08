@@ -141,8 +141,20 @@ export default {
       }
     }
 
+    .bottom {
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 35px;
+      width: 100%;
+
+      /deep/ .el-form-item__content {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+    }
+
     .submit {
-      width: 477px;
+      width: 80%;
       height: 60px;
       background-color: #ba2727;
       border: none;
@@ -158,14 +170,6 @@ export default {
       background-color: #fff;
     }
 
-    .bottom {
-      display: flex;
-      justify-content: center;
-      border-bottom: 1px solid #e0e0e0;
-      padding-bottom: 35px;
-
-    }
-
   }
 
   .submit {
@@ -176,7 +180,7 @@ export default {
 
     .submitFront,
     .submitBack {
-      width: 60%;
+      width: 65%;
       margin: 0 auto;
       padding: 9px 0;
       text-align: center;

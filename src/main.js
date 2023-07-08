@@ -14,7 +14,6 @@ import '../src/assets/fonts/iconfont.js'
 import 'default-passive-events'
 
 Vue.config.productionTip = false
-
 Vue.use(ElementUI)
 
 new Vue({

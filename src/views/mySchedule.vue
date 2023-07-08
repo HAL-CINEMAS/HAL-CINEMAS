@@ -109,7 +109,48 @@ export default {
       activeIndex: null,
       selectedDate: null, // 选中时间段
       data: null,
-      screen: [],
+      screen: [
+        {
+          num: 'L1',
+          size: '大',
+          times: [{ start: '15:00', end: '16:45' }, { start: '18:15', end: '20:50' }, { start: '21:15', end: '23:00' }]
+        },
+        {
+          num: 'L2',
+          size: '大',
+          times: [{ start: '9:00', end: '10:45' }, { start: '13:15', end: '14:00' }]
+        },
+        {
+          num: 'L3',
+          size: '大',
+          times: [{ start: '15:00', end: '16:45' }, { start: '18:15', end: '20:50' }, { start: '15:00', end: '16:45' }, { start: '15:00', end: '16:45' }]
+        },
+        {
+          num: 'M1',
+          size: '中',
+          times: [{ start: '9:00', end: '10:45' }, { start: '13:15', end: '14:00' }]
+        },
+        {
+          num: 'M2',
+          size: '中',
+          times: [{ start: '15:00', end: '16:45' }, { start: '18:15', end: '20:50' }]
+        },
+        {
+          num: 'S1',
+          size: '小',
+          times: [{ start: '9:00', end: '10:45' }, { start: '13:15', end: '14:00' }]
+        },
+        {
+          num: 'S2',
+          size: '小',
+          times: [{ start: '15:00', end: '16:45' }, { start: '18:15', end: '20:50' }]
+        },
+        {
+          num: 'S3',
+          size: '小',
+          times: [{ start: '9:00', end: '10:45' }, { start: '13:15', end: '14:00' }]
+        }
+      ],
       user: 1 // 假设用户是否登入 1为已登入 2为未登入
     }
   },
@@ -231,7 +272,9 @@ export default {
       if (screenTemp.S1.length !== 0) { this.screen.push({ num: 'S1', size: '小', times: screenTemp.S1, id: id }) }
       if (screenTemp.S2.length !== 0) { this.screen.push({ num: 'S2', size: '小', times: screenTemp.S2, id: id }) }
       if (screenTemp.S3.length !== 0) { this.screen.push({ num: 'S3', size: '小', times: screenTemp.S3, id: id }) }
-    }
+      console.log(this.movieContent.id, this.selectedDate)
+      // this.firebase()
+      // console.log(this.screen)
   },
   created() {
     // 将数据存到localStorage和vuex
@@ -484,6 +527,7 @@ export default {
             display: flex;
             justify-content: center;
             align-items: center;
+            width: 85%;
 
             .active {
               background-color: #d32f2f !important;
@@ -494,7 +538,7 @@ export default {
               border-right: 1px solid #cacaca;
               // padding: 20px 20px;
               // width: 20%;
-              width: 133px;
+              width: 20%;
               height: 80px;
               text-align: center;
               line-height: 65px;

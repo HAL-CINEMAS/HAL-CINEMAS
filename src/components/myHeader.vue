@@ -25,8 +25,7 @@
 
 <script>
 import app from '@/api/firebase.js'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
-// import { getAuth, signOut } from 'firebase/auth'
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 
 export default {
   name: 'myHeader',
@@ -40,10 +39,11 @@ export default {
     const auth = getAuth(app)
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const uid = user.uid
+        const uid = user.email
         this.loginid = uid
+        this.$store.commit('useridSave', uid)
       } else {
-        this.loginid = 'null'
+        this.loginid = 'ログイン'
         console.log('dont login')
       }
     })
@@ -56,18 +56,36 @@ export default {
     userAction(item) {
       if (item === 'a') {
         if (this.$route.name === 'user') return
-        this.$router.push({
-          name: 'user'
-        })
+        if (this.$store.state.tab.uid === false && this.$route.path === '/login') return
+        if (this.$store.state.tab.uid === false && this.$route.path !== '/login') {
+          this.$router.push({
+            name: 'login'
+          })
+        } else {
+          this.$router.push({
+            name: 'user'
+          })
+        }
       } else if (item === 'e') {
-        // ログアウトの操作はこちに入れる
-        alert('ログアウト')
-        this.$router.push({
-          name: 'home'
-        })
+        if (this.$store.state.tab.uid === false) return
+        this.logout()
       }
+    },
+    // ログアウト機能
+    logout() {
+      const auth = getAuth(app)
+      signOut(auth)
+        .then(() => {
+          this.$store.commit('useridSave', '')
+          if (this.$route.path === '/home') return
+          this.$router.push({
+            name: 'home'
+          })
+        })
+        .catch((error) => {
+          console.log('error', error)
+        })
     }
-
   },
   computed: {
     getMenuChange() {

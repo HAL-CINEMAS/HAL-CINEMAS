@@ -3,7 +3,8 @@ export default {
     isCollapse: false,
     movieList: {},
     active: 0,
-    registerActive: 0
+    registerActive: 0,
+    uid: false
   },
   mutations: {
     isCollapseChange(state) {
@@ -17,6 +18,13 @@ export default {
     },
     registerActiveChange(state, num) {
       state.registerActive = num
+    },
+    useridSave(state, userid) {
+      if (userid !== '') {
+        state.uid = true
+      } else {
+        state.uid = false
+      }
     }
   }
 }

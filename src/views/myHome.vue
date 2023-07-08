@@ -8,7 +8,7 @@
         <span>シネマイレージカードをお持ちで、会員情報登録・パスワード登録をする方はこちらから</span>
       </el-card>
       <div class="ViewPager">
-        <el-carousel :interval="5000" type="card" height="400px" trigger="click">
+        <el-carousel :interval="5000" type="card" height="300px" trigger="click">
           <el-carousel-item v-for="item in ViewImg" :key="item.title">
             <img :src="require(`../assets/images/${item.img}.jpg`)" alt="">
             <div class="ViewPagerContent">
