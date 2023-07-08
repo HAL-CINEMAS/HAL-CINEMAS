@@ -91,12 +91,12 @@ export default {
   methods: {
     getInfo() {
       // 假设的数据
-      const info = JSON.parse(localStorage.getItem('buyTicket'))
-      this.movieName = info[0]
-      this.screend = info[1]
-      this.seeTime = info[2]
-      this.ticketInfo = info
-      console.log(this.seeTime)
+      // const info = JSON.parse(localStorage.getItem('buyTicket'))
+      // this.movieName = info.title
+      // this.screend = info.screen
+      // this.seeTime = info.date
+      // this.ticketInfo = info
+      // console.log(this.seeTime)
     }
   },
   created() {

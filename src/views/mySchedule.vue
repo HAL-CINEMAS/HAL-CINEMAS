@@ -109,50 +109,22 @@ export default {
       activeIndex: null,
       selectedDate: null, // 选中时间段
       data: null,
-      screen: [
-        {
-          num: 'L1',
-          size: '大',
-          times: [{ start: '15:00', end: '16:45' }, { start: '18:15', end: '20:50' }, { start: '21:15', end: '23:00' }]
-        },
-        {
-          num: 'L2',
-          size: '大',
-          times: [{ start: '9:00', end: '10:45' }, { start: '13:15', end: '14:00' }]
-        },
-        {
-          num: 'L3',
-          size: '大',
-          times: [{ start: '15:00', end: '16:45' }, { start: '18:15', end: '20:50' }, { start: '15:00', end: '16:45' }, { start: '15:00', end: '16:45' }]
-        },
-        {
-          num: 'M1',
-          size: '中',
-          times: [{ start: '9:00', end: '10:45' }, { start: '13:15', end: '14:00' }]
-        },
-        {
-          num: 'M2',
-          size: '中',
-          times: [{ start: '15:00', end: '16:45' }, { start: '18:15', end: '20:50' }]
-        },
-        {
-          num: 'S1',
-          size: '小',
-          times: [{ start: '9:00', end: '10:45' }, { start: '13:15', end: '14:00' }]
-        },
-        {
-          num: 'S2',
-          size: '小',
-          times: [{ start: '15:00', end: '16:45' }, { start: '18:15', end: '20:50' }]
-        },
-        {
-          num: 'S3',
-          size: '小',
-          times: [{ start: '9:00', end: '10:45' }, { start: '13:15', end: '14:00' }]
-        }
-      ],
+      screen: [],
       user: 1 // 假设用户是否登入 1为已登入 2为未登入
     }
+  },
+  created() {
+    // 将数据存到localStorage和vuex
+    const storedData = JSON.parse(localStorage.getItem('movieData'))
+    this.movieContent = (typeof this.$store.state.tab.movieList === 'object' && Object.keys(this.$store.state.tab.movieList).length === 0) ? storedData : this.$store.state.tab.movieList
+    this.items = this.dates
+    // 当页面渲染的时候自定点击
+    this.$nextTick(() => {
+      this.$refs.myTabs.setCurrentName('1')
+    })
+
+    // 获得Movie传来的数据
+    this.data = this.$route.params.data
   },
   methods: {
     handleClick(tab, event) {
@@ -275,19 +247,7 @@ export default {
       console.log(this.movieContent.id, this.selectedDate)
       // this.firebase()
       // console.log(this.screen)
-  },
-  created() {
-    // 将数据存到localStorage和vuex
-    const storedData = JSON.parse(localStorage.getItem('movieData'))
-    this.movieContent = (typeof this.$store.state.tab.movieList === 'object' && Object.keys(this.$store.state.tab.movieList).length === 0) ? storedData : this.$store.state.tab.movieList
-    this.items = this.dates
-    // 当页面渲染的时候自定点击
-    this.$nextTick(() => {
-      this.$refs.myTabs.setCurrentName('1')
-    })
-
-    // 获得Movie传来的数据
-    this.data = this.$route.params.data
+    }
   },
   computed: {
     // 数组slice选出开头和结尾的时间
@@ -314,7 +274,6 @@ export default {
         dates.push(formattedDate)
         currentDate.setDate(currentDate.getDate() + 1)
       }
-
       return dates
     }
   }
