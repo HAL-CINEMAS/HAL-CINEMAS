@@ -2,24 +2,24 @@
   <div>
     <el-card class="seatContentRight">
       <p>作品</p>
-      <h3>{{ ticketDetail[0] }}</h3>
+      <h3>{{ ticketDetail.title }}</h3>
       <p>日時</p>
-      <h3>{{ ticketDetail[2].mounth }}月{{ ticketDetail[2].day }}日 ({{ ticketDetail[2].week }})
+      <h3>{{ ticketDetail.date.mounth }}月{{ ticketDetail.date.day }}日 ({{ ticketDetail.date.week }})
         <br>
-        {{ ticketDetail[2].start }}~{{ ticketDetail[2].end }}
+        {{ ticketDetail.date.start }}~{{ ticketDetail.date.end }}
       </h3>
       <p>スクリーン</p>
-      <h3>{{ ticketDetail[1] }}</h3>
+      <h3>{{ ticketDetail.screen }}</h3>
       <p>座席・券種</p>
 
-      <h3 v-if="ticketDetail[4] !== undefined">
-        <h3 class="ticket" v-for="item in  ticketDetail[4] " :key="item.name">
+      <h3 v-if="ticketDetail.ticket !== undefined">
+        <h3 class="ticket" v-for="item in  ticketDetail.ticket " :key="item.name">
           <div class="left">{{ item.name }}</div>
           <div>{{ item.ticketName }}</div>
           <div>/{{ item.ticketMoney }}円</div>
         </h3>
       </h3>
-      <h3 v-else-if="ticketDetail[4] === undefined">
+      <h3 v-else-if="ticketDetail.ticket === undefined">
         <br>
       </h3>
 
@@ -42,8 +42,9 @@ export default {
   },
   methods: {
     buyTicket() {
-      const a = localStorage.getItem('buyTicket')
-      this.ticketDetail = JSON.parse(a)
+      const ticketData = localStorage.getItem('buyTicket')
+      this.ticketDetail = JSON.parse(ticketData)
+      // console.log(this.ticketDetail)
     }
   }
 }

@@ -87,14 +87,15 @@
 </template>
 
 <script>
-// import { getFirestore, getDocs, collection, where, query, orderBy } from 'firebase/firestore'
-// import app from '@/api/firebase.js'
+import { getFirestore, getDocs, collection, query, startAt, endAt, orderBy } from 'firebase/firestore'
+import app from '@/api/firebase.js'
 export default {
   name: 'mySchedule',
   data() {
     return {
       movieContent: {
       },
+      scheduleId: null,
       scheduleList: [
         { id: 1, name: '東北' }
       ],
@@ -164,19 +165,28 @@ export default {
 
     },
     handleScroll() {
-      console.log('a')
+      console.log('handleScroll()')
     },
 
     // 选择的具体信息
     buyTicket(e, item) {
       // 选中时间
       const time = e
-      const size = item.num
       const mounth = this.getLeftPart(this.selectedDate)
       const day = this.getRightPart(this.selectedDate)
       const week = this.getWeekday(this.selectedDate)
-      const obj = { mounth, day, week, ...time }
-      const buyDetail = JSON.stringify([this.movieContent.title, size, obj])
+      const buyDetail = JSON.stringify({
+        title: this.movieContent.title,
+        movieId: this.movieContent.id,
+        scheduleId: item.id,
+        screen: item.num,
+        date: { mounth, day, week, ...time },
+        seatSelect: null,
+        seatSelectNum: null,
+        ticket: null,
+        account: null
+      })
+      console.log(buyDetail)
       localStorage.setItem('buyTicket', buyDetail)
       this.$router.push({
         name: 'seat'
@@ -222,38 +232,49 @@ export default {
     changeColor(item, index) {
       this.activeIndex = index
       this.selectedDate = item
+      // console.log(this.movieContent.id, this.selectedDate)
+      this.firebase()
+    },
+    async firebase() {
+      this.screen = []
+      const screenTemp = { L1: [], L2: [], L3: [], M1: [], M2: [], S1: [], S2: [], S3: [] }
+      const db = getFirestore(app)
+      const TimestampNow = new Date()
+      const selectTimestamp = this.selectedDate.split('/')
+      // 2023年に固定(後で直す)
+      let selectTimestampStart = new Date(2023, selectTimestamp[0] - 1, selectTimestamp[1], 0, 0, 0, 0)
+      if (selectTimestampStart < TimestampNow) {
+        selectTimestampStart = TimestampNow
+      }
+      const selectTimestampEnd = new Date(2023, selectTimestamp[0] - 1, selectTimestamp[1], 23, 59, 59, 999)
+      const querySnapshot = await getDocs(query(collection(db, 'schedule'), orderBy('date', 'asc'), startAt(selectTimestampStart), endAt(selectTimestampEnd)))
+      let id = null
+      querySnapshot.forEach((doc) => {
+        const S = doc.data().timeS.toString()
+        const E = doc.data().timeE.toString()
+        const Sr = S.slice(0, 2) + ':' + S.slice(2, 4)
+        const Er = E.slice(0, 2) + ':' + E.slice(2, 4)
+        if (doc.data().screen === 'L1') { screenTemp.L1.push({ start: Sr, end: Er }) }
+        if (doc.data().screen === 'L2') { screenTemp.L2.push({ start: Sr, end: Er }) }
+        if (doc.data().screen === 'L3') { screenTemp.L3.push({ start: Sr, end: Er }) }
+        if (doc.data().screen === 'M1') { screenTemp.M1.push({ start: Sr, end: Er }) }
+        if (doc.data().screen === 'M2') { screenTemp.M2.push({ start: Sr, end: Er }) }
+        if (doc.data().screen === 'S1') { screenTemp.S1.push({ start: Sr, end: Er }) }
+        if (doc.data().screen === 'S2') { screenTemp.S2.push({ start: Sr, end: Er }) }
+        if (doc.data().screen === 'S3') { screenTemp.S3.push({ start: Sr, end: Er }) }
+        id = doc.id
+      })
+      if (screenTemp.L1.length !== 0) { this.screen.push({ num: 'L1', size: '大', times: screenTemp.L1, id: id }) }
+      if (screenTemp.L2.length !== 0) { this.screen.push({ num: 'L2', size: '大', times: screenTemp.L2, id: id }) }
+      if (screenTemp.L3.length !== 0) { this.screen.push({ num: 'L3', size: '大', times: screenTemp.L3, id: id }) }
+      if (screenTemp.M1.length !== 0) { this.screen.push({ num: 'M1', size: '中', times: screenTemp.M1, id: id }) }
+      if (screenTemp.M2.length !== 0) { this.screen.push({ num: 'M2', size: '中', times: screenTemp.M2, id: id }) }
+      if (screenTemp.S1.length !== 0) { this.screen.push({ num: 'S1', size: '小', times: screenTemp.S1, id: id }) }
+      if (screenTemp.S2.length !== 0) { this.screen.push({ num: 'S2', size: '小', times: screenTemp.S2, id: id }) }
+      if (screenTemp.S3.length !== 0) { this.screen.push({ num: 'S3', size: '小', times: screenTemp.S3, id: id }) }
       console.log(this.movieContent.id, this.selectedDate)
       // this.firebase()
       // console.log(this.screen)
-    }
-    // async firebase() {
-    //   this.screen = []
-    //   const screenTemp = { L1: [], L2: [], L3: [], M1: [], M2: [], S1: [], S2: [], S3: [] }
-    //   const db = getFirestore(app)
-    //   const querySnapshot = await getDocs(query(collection(db, 'schedule'), where('movie-id', '==', this.movieContent.id), where('day', '==', this.selectedDate), orderBy('timeS', 'asc')))
-    //   querySnapshot.forEach((doc) => {
-    //     const S = doc.data().timeS.toString()
-    //     const E = doc.data().timeE.toString()
-    //     const Sr = S.slice(0, 2) + ':' + S.slice(2, 4)
-    //     const Er = E.slice(0, 2) + ':' + E.slice(2, 4)
-    //     if (doc.data().screen === 'L1') { screenTemp.L1.push({ start: Sr, end: Er }) }
-    //     if (doc.data().screen === 'L2') { screenTemp.L2.push({ start: Sr, end: Er }) }
-    //     if (doc.data().screen === 'L3') { screenTemp.L3.push({ start: Sr, end: Er }) }
-    //     if (doc.data().screen === 'M1') { screenTemp.M1.push({ start: Sr, end: Er }) }
-    //     if (doc.data().screen === 'M2') { screenTemp.M2.push({ start: Sr, end: Er }) }
-    //     if (doc.data().screen === 'S1') { screenTemp.S1.push({ start: Sr, end: Er }) }
-    //     if (doc.data().screen === 'S2') { screenTemp.S2.push({ start: Sr, end: Er }) }
-    //     if (doc.data().screen === 'S3') { screenTemp.S3.push({ start: Sr, end: Er }) }
-    //   })
-    //   if (screenTemp.L1.length !== 0) { this.screen.push({ num: 'L1', size: '大', times: screenTemp.L1 }) }
-    //   if (screenTemp.L2.length !== 0) { this.screen.push({ num: 'L2', size: '大', times: screenTemp.L2 }) }
-    //   if (screenTemp.L3.length !== 0) { this.screen.push({ num: 'L3', size: '大', times: screenTemp.L3 }) }
-    //   if (screenTemp.M1.length !== 0) { this.screen.push({ num: 'M1', size: '中', times: screenTemp.M1 }) }
-    //   if (screenTemp.M2.length !== 0) { this.screen.push({ num: 'M2', size: '中', times: screenTemp.M2 }) }
-    //   if (screenTemp.S1.length !== 0) { this.screen.push({ num: 'S1', size: '小', times: screenTemp.S1 }) }
-    //   if (screenTemp.S2.length !== 0) { this.screen.push({ num: 'S2', size: '小', times: screenTemp.S2 }) }
-    //   if (screenTemp.S3.length !== 0) { this.screen.push({ num: 'S3', size: '小', times: screenTemp.S3 }) }
-    // }
   },
   created() {
     // 将数据存到localStorage和vuex

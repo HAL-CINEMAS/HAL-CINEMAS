@@ -68,8 +68,8 @@ export default {
       this.ticketList.forEach((item) => {
         newArr.push(item)
       })
-      this.localStorageData[4] = newArr
-      this.localStorageData[5] = this.getTicketAcount
+      this.localStorageData.ticket = newArr
+      this.localStorageData.account = this.getTicketAcount
       localStorage.setItem('buyTicket', JSON.stringify(this.localStorageData))
       if (this.backChange === false) return
       this.$router.push({
@@ -78,9 +78,9 @@ export default {
     },
     createdR() {
       const buyTicket = JSON.parse(localStorage.getItem('buyTicket'))
-      buyTicket[4] = []
+      buyTicket.ticket = []
       this.localStorageData = buyTicket
-      const result = buyTicket[3].reduce((acc, item) => {
+      const result = buyTicket.seatSelect.reduce((acc, item) => {
         acc.push({ name: item, click: false, ticketName: '', ticketMoney: 0 })
         return acc
       }, [])
