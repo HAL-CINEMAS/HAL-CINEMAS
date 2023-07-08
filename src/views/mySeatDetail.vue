@@ -277,7 +277,7 @@ export default {
   .seatTr,
   .seatTd {
     display: inline-block;
-    font-size: 1.18em !important;
+    font-size: 19px !important;
   }
 
   .seatTd {
