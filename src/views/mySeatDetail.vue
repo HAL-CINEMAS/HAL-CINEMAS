@@ -12,12 +12,12 @@
       </div>
     </div>
     <div class="seatTop"
-      :class="{ 'bcgImg1': screenFirst === 'L', 'bcgImg2': screenFirst === 'M', 'bcgImg3': screenFirst === 'S' }">
+      :class="{ 'bcgImg1': screenSize === 'L', 'bcgImg2': screenSize === 'M', 'bcgImg3': screenSize === 'S' }">
       <div class="screen"></div>
       <p class="screenName">スクリーン:<i>{{ this.screen }}</i></p>
       <div class="seatTr" v-for="(  row, rowIndex  ) in   seatGrid  " :key="rowIndex">
         <div class="seatTd" v-for="(  seat, columnIndex  ) in   row  " :key="columnIndex" :class="{
-          'selected': seat.selected, 'add-style': (screenFirst === 'L' && (columnIndex === 3 || columnIndex === 15)) || (screenFirst === 'M' && (columnIndex === 1 || columnIndex === 9))
+          'selected': seat.selected, 'add-style': (screenSize === 'L' && (columnIndex === 3 || columnIndex === 15)) || (screenSize === 'M' && (columnIndex === 1 || columnIndex === 9))
         }
           ">
           <!-- 动态显示被购买的座位 -->
@@ -33,9 +33,9 @@
         <span class="right">設備・音響</span>
       </p>
       <p class="equipmentAmount">
-        <span v-if="screenFirst === 'L'">200 席</span>
-        <span v-else-if="screenFirst === 'M'">120 席</span>
-        <span v-else-if="screenFirst === 'S'">70 席</span>
+        <span v-if="screenSize === 'L'">200 席</span>
+        <span v-else-if="screenSize === 'M'">120 席</span>
+        <span v-else-if="screenSize === 'S'">70 席</span>
       </p>
     </div>
     <div class="submit">
@@ -64,30 +64,46 @@
 </template>
 
 <script>
+import { getFirestore, getDocs, collection, query, getDoc, doc } from 'firebase/firestore'
+import app from '@/api/firebase.js'
+const db = getFirestore(app)
 export default {
   data() {
     return {
       seatGrid: [],
       screen: '',
       selected: [],
-      screenFirst: '',
+      buySeatNum: [],
+      screenSize: '',
       isFirstLoad: true
     }
+  },
+  async mounted() {
+    const buyTicket = JSON.parse(localStorage.getItem('buyTicket'))
+    const data = await getDoc(doc(db, 'seats', buyTicket.scheduleId))
+    const seatAry = data.data().seat
+    seatAry.forEach(item => {
+      const rowIndex = item.split(',')[0]
+      const columnIndex = item.split(',')[1]
+      this.seatGrid[rowIndex][columnIndex].buy = true
+    })
   },
   created() {
     // 根据传来的参数动态显示屏幕
     const buyTicket = JSON.parse(localStorage.getItem('buyTicket'))
-    this.screen = buyTicket[1]
-    this.screenFirst = buyTicket[1][0]
-    if (this.screenFirst === 'L') {
+    buyTicket.ticket = []
+    this.screen = buyTicket.screen
+    this.screenSize = buyTicket.screen[0]
+    if (this.screenSize === 'L') {
       this.generateSeatGrid(10, 20)
-    } else if (this.screenFirst === 'M') {
+    } else if (this.screenSize === 'M') {
       this.generateSeatGrid(10, 12)
     } else {
       this.generateSeatGrid(10, 7)
     }
 
     this.$store.commit('activeChange', 0)
+    this.buySeat()
   },
   methods: {
     // 动态生成座位
@@ -99,12 +115,21 @@ export default {
         const rowLabel = alphabet[row]
 
         for (let column = 1; column <= C; column++) {
-          const seatLabel = `${rowLabel}${column}`
+          const seatLabel = `${rowLabel}${('0' + column).slice(-2)}`
           seatRow.push({ row: rowLabel, column, label: seatLabel, selected: false, buy: false })
         }
-
         this.seatGrid.push(seatRow)
       }
+    },
+    async buySeat() {
+      const buySeat = []
+      const querySnapshot = await getDocs(query(collection(db, 'seat')))
+      querySnapshot.forEach((doc) => {
+        const seatAry = doc.data().seat
+        for (let i = 0; i < seatAry.length; i++) {
+          buySeat.push([seatAry[i].slice(0, 1), Number(seatAry[i].slice(1, 3))])
+        }
+      })
     },
     // 底部已选择的方法
     selectSeat(rowIndex, columnIndex, seat) {
@@ -112,15 +137,24 @@ export default {
         return alert('選択できる席は、6席までです。')
       }
       this.seatGrid[rowIndex][columnIndex].selected = !this.seatGrid[rowIndex][columnIndex].selected
-      console.log(seat)
       // 点击座位显示在最底下
+      if (this.seatGrid[rowIndex][columnIndex].buy) {
+        this.seatGrid[rowIndex][columnIndex].selected = false
+      }
+
       if (this.seatGrid[rowIndex][columnIndex].selected) {
         this.selected.push(seat.label)
+        this.buySeatNum.push(rowIndex + ',' + columnIndex)
+        this.selected.sort()
       } else if (!this.seatGrid[rowIndex][columnIndex].selected) {
         this.selected = this.selected.filter((value) => {
           return value !== seat.label
         })
+        this.buySeatNum = this.buySeatNum.filter((value) => {
+          return value[0] !== rowIndex || value[1] !== columnIndex
+        })
       }
+      // console.log(this.buySeatNum)
     },
     // 清楚选择座位
     selectClear() {
@@ -135,7 +169,8 @@ export default {
     ticketBuy() {
       if (this.selected.length === 0) return
       const buyTicket = JSON.parse(localStorage.getItem('buyTicket'))
-      buyTicket[3] = this.selected
+      buyTicket.seatSelect = this.selected
+      buyTicket.seatSelectNum = this.buySeatNum
       localStorage.setItem('buyTicket', JSON.stringify(buyTicket))
       this.$router.push({
         name: 'ticket2'

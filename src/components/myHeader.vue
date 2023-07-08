@@ -9,11 +9,11 @@
     <div class="login">
       <el-dropdown @command="userAction" :hide-timeout="200">
         <span class="el-dropdown-link">
-          {{ loginid }}
+          menu
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="a">マイページ</el-dropdown-item>
-          <el-dropdown-item command="b">XXX</el-dropdown-item>
+          <el-dropdown-item command="b">{{ loginid }}</el-dropdown-item>
           <el-dropdown-item command="c">XXX</el-dropdown-item>
           <el-dropdown-item command="d">XXX</el-dropdown-item>
           <el-dropdown-item command="e">ログアウト</el-dropdown-item>
