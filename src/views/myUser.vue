@@ -2,7 +2,7 @@
   <div>
     <Premium></Premium>
     <div class="userDetail">
-      <el-card>ウーさんのマイページ</el-card>
+      <el-card>{{ userName }}さんのマイページ</el-card>
       <el-tabs type="border-card" class="buyList">
         <el-tab-pane>
           <span slot="label"><i class="iconfont icon-shoucang3"></i> みたい</span>
@@ -18,38 +18,42 @@
         </el-tab-pane>
         <el-tab-pane>
           <span slot="label"><i class="iconfont icon-goumaijilu"></i> 購入履歴</span>
-          <el-descriptions v-for="item in ticketInfo[4]" :key="item[0]" class="margin-top" :column="3"
+          <el-descriptions v-for="item in ticketInfo" :key="item.id" class="margin-top" :column="3"
             style="margin-top: 20px;" border>
-            <template slot="extra">
+            <!-- <template slot="extra">
               <el-button type="primary" size="small">操作</el-button>
-            </template>
+            </template> -->
             <el-descriptions-item>
               <template slot="label">
                 <i class="iconfont icon-dianying"></i>
                 作品名
               </template>
-              {{ movieName }}
+              {{ item.movie }}
             </el-descriptions-item>
             <el-descriptions-item>
               <template slot="label">
                 <i class="iconfont icon-calendar"></i>
                 鑑賞日
               </template>
-              {{ seeTime.mounth }}月{{ seeTime.day }}日 ({{ seeTime.week }}) {{ seeTime.start }}~{{ seeTime.end }}
+              {{ item.date }}
             </el-descriptions-item>
             <el-descriptions-item>
               <template slot="label">
                 <i class="iconfont icon-pingmubili1_1"></i>
                 スクリーン
               </template>
-              {{ screend }}
+              {{ item.screen }}
             </el-descriptions-item>
             <el-descriptions-item>
               <template slot="label">
                 <i class="el-icon-tickets"></i>
                 座席・券種
               </template>
-              {{ item.name }}&nbsp;&nbsp;&nbsp;{{ item.ticketName }}
+              <span v-for="(seat, index) in item.seat" :key="index">
+                {{ seat }}
+                <span v-if="index < item.seat.length - 1">, </span>
+              </span>
+              <!-- {{ item.name }}&nbsp;&nbsp;&nbsp;{{ item.ticketName }} -->
             </el-descriptions-item>
             <el-descriptions-item>
               <template slot="label">
@@ -74,6 +78,9 @@
 
 <script>
 import Premium from '../components/myPremium.vue'
+import app from '@/api/firebase.js'
+import { getFirestore, getDoc, getDocs, doc, query, collection, where } from 'firebase/firestore'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 export default {
   name: 'myUser',
   data() {
@@ -82,11 +89,33 @@ export default {
       ticketInfo: [],
       movieName: '',
       screend: '',
-      seeTime: {}
+      seeTime: {},
+      userName: null
     }
   },
   components: {
     Premium
+  },
+  mounted() {
+    const auth = getAuth(app)
+    onAuthStateChanged(auth, async(user) => {
+      if (user) {
+        const userID = user.uid
+        const db = getFirestore(app)
+        const QueryUsername = await getDoc(doc(db, 'user', userID))
+        this.userName = QueryUsername.data().name
+        console.log(QueryUsername.data().name)
+
+        const QueryTicket = await getDocs(query(collection(db, 'ticket'), where('user', '==', userID)))
+        console.log(QueryTicket)
+        QueryTicket.forEach((doc) => {
+          this.ticketInfo.push(doc.data())
+        })
+      } else {
+        // user is dont login
+        console.log('dont login')
+      }
+    })
   },
   methods: {
     getInfo() {
