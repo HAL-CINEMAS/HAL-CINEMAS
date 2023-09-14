@@ -18,10 +18,13 @@
       <div class="seatTr" v-for="(  row, rowIndex  ) in   seatGrid  " :key="rowIndex">
         <div class="seatTd" v-for="(  seat, columnIndex  ) in   row  " :key="columnIndex" :class="{
           'selected': seat.selected, 'add-style': (screenFirst === 'L' && (columnIndex === 3 || columnIndex === 15)) || (screenFirst === 'M' && (columnIndex === 1 || columnIndex === 9))
+          //  'iconfont icon-zuowei1 icon-small': NoSelect.includes(seat.label)
         }
           ">
           <!-- 动态显示被购买的座位 -->
-          <i v-if="seat.buy === false" class="iconfont icon-zuowei" @click="selectSeat(rowIndex, columnIndex, seat)"></i>
+          <i v-if="seat.buy === false" class="iconfont icon-zuowei"
+            v-on:click="!NoSelect.includes(seat.label) && selectSeat(rowIndex, columnIndex, seat)"></i>
+          <!-- <i v-else-if="NoSelect.includes(seat.label)"></i> -->
           <i v-else disabled class="iconfont icon-zuowei1" style="pointer-events: none;" @click.stop></i>
         </div>
       </div>
@@ -71,12 +74,23 @@ export default {
       screen: '',
       selected: [],
       screenFirst: '',
-      isFirstLoad: true
+      isFirstLoad: true,
+      NoSelect: []
     }
   },
   created() {
     // 根据传来的参数动态显示屏幕
     const buyTicket = JSON.parse(localStorage.getItem('buyTicket'))
+    const buys = JSON.parse(localStorage.getItem('buys'))
+    const buysTicket = []
+    if (buys) {
+      buys.forEach(item => {
+        buysTicket.push(...item[3])
+      })
+    }
+
+    this.NoSelect = buysTicket
+    // console.log(this.NoSelect)
     this.screen = buyTicket[1]
     this.screenFirst = buyTicket[1][0]
     if (this.screenFirst === 'L') {
@@ -102,7 +116,8 @@ export default {
 
         for (let column = 1; column <= C; column++) {
           const seatLabel = `${rowLabel}${column}`
-          seatRow.push({ row: rowLabel, column, label: seatLabel, selected: false, buy: false })
+          const isBuy = this.NoSelect.includes(seatLabel)
+          seatRow.push({ row: rowLabel, column, label: seatLabel, selected: false, buy: isBuy })
         }
         // 将作为假设的放入本地
         this.seatGrid.push(seatRow)
@@ -154,6 +169,7 @@ export default {
       return this.selected.length === 0
     }
   }
+
 }
 </script>
 
@@ -431,5 +447,13 @@ export default {
 
 .selected {
   color: red;
+}
+
+.disabled {
+  background-color: yellow; // 将座位的背景色设为黄色
+}
+
+.icon-small {
+  display: none;
 }
 </style>

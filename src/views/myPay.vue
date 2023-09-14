@@ -81,43 +81,104 @@
 <script>
 import SeatNav from '../components/mySeatNav.vue'
 import app from '@/api/firebase.js'
-import { getFirestore, collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getFirestore, collection, addDoc } from 'firebase/firestore'
 const db = getFirestore(app)
 export default {
   name: 'myPay',
   data() {
     return {
       buyTicket: [],
-      userinfo: {}
+      userinfo: {},
+      loginid: ''
     }
   },
   created() {
     this.$store.commit('activeChange', 2)
     this.getbuyTicket()
   },
+  mounted() {
+    const auth = getAuth(app)
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid
+        this.loginid = uid
+      } else {
+        this.loginid = 'null'
+        console.log('dont login')
+      }
+    })
+  },
   methods: {
     getbuyTicket() {
+      const oldTicket = JSON.parse(localStorage.getItem('buys'))
       const buyTicket = JSON.parse(localStorage.getItem('buyTicket'))
       const userinfo = JSON.parse(localStorage.getItem('userinfo'))
+      console.log(buyTicket)
+      const bus = []
+
+      if (!oldTicket) {
+        bus.push(buyTicket)
+        localStorage.setItem('buys', JSON.stringify(bus))
+      } else {
+        const buys = oldTicket
+        buys.push(buyTicket)
+        localStorage.setItem('buys', JSON.stringify(buys))
+      }
 
       this.buyTicket = buyTicket
       this.userinfo = userinfo
+      console.log(this.buyTicket)
     },
 
     addticket() {
-      console.log('success')
+      let date = this.buyTicket[2]
+      date = `${date.mounth}月${date.day}日 (${date.week}) ${date.start}~${date.end}`
+      const day = ['日', '月', '火', '水', '木', '金', '土']
+      let timestamp = new Date()
+      timestamp = `${Number(timestamp.getMonth()) + 1}月${timestamp.getDate()}日 (${day[timestamp.getDay()]}) ${timestamp.getHours()}:${('0' + timestamp.getMinutes()).slice(-2)}`
+      const nowTime = new Date()
+
+      // 使用提供的数据
+      const user = this.loginid
+      const movie = this.buyTicket[0]
+      const screen = this.buyTicket[1]
+      const seat = this.buyTicket[3]
+      const seatType = this.buyTicket[4]
+      const ticketMoney = this.buyTicket[5]
+
       addDoc(collection(db, 'ticket'), {
-        test: 'test',
-        timestamp: serverTimestamp()
+        user,
+        movie,
+        screen,
+        seat,
+        ticketMoney,
+        cinema: 'HAL シネマズ',
+        date,
+        timestamp,
+        nowTime,
+        seatType
       }).catch((error) => {
         const errorCode = error.code
         const errorMessage = error.message
         console.log(errorCode)
         console.log(errorMessage)
       })
-      this.$router.push({
-        name: 'payend'
-      })
+
+      // setDoc(doc(db, 'seats', this.buyTicket.scheduleId))
+      // this.buyTicket[3].forEach(item => {
+      //   updateDoc(doc(db, 'seats', this.buyTicket.scheduleId), {
+      //     seat: arrayUnion(item)
+      //   }).catch((error) => {
+      //     const errorCode = error.code
+      //     const errorMessage = error.message
+      //     console.log(errorCode)
+      //     console.log(errorMessage)
+      //   })
+      // })
+      // console.log(this.buyTicket[3])
+
+      this.$router.push('/payend')
     }
   },
   computed: {

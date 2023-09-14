@@ -1,12 +1,12 @@
 import { initializeApp } from 'firebase/app'
 const firebaseConfig = {
-  apiKey: process.env.VUE_APP_API,
-  authDomain: process.env.VUE_APP_AUTH,
-  projectId: process.env.VUE_APP_PROJECT,
-  storageBucket: process.env.VUE_APP_STORAGE,
-  messagingSenderId: process.env.VUE_APP_MESSAGE,
-  appId: process.env.VUE_APP_ID,
-  measurementId: process.env.VUE_APP_MEASUREMENT
+  apiKey: 'AIzaSyDjY-CR4HO8Ev1zuaHTPU7w12UlVaEn8O4',
+  authDomain: 'hal-cinema-db.firebaseapp.com',
+  projectId: 'hal-cinema-db',
+  storageBucket: 'hal-cinema-db.appspot.com',
+  messagingSenderId: '775944880604',
+  appId: '1:775944880604:web:31e2e22953511bb1f9cf19',
+  measurementId: 'G-44EF44WLBQ'
 }
 
 // Initialize Firebase

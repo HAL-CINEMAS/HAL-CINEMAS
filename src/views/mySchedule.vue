@@ -144,6 +144,9 @@ export default {
         })
       } else {
         alert('ログインしてください')
+        this.$router.push({
+          name: 'login'
+        })
       }
     },
     // 进来自动点击
