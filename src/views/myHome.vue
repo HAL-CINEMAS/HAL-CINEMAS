@@ -143,6 +143,8 @@ export default {
     }
 
     .AD {
+      position: fixed;
+      bottom: 20px;
       display: flex;
       justify-content: space-around;
 
