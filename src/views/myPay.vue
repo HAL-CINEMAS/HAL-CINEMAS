@@ -114,7 +114,6 @@ export default {
   },
   methods: {
     getbuyTicket() {
-      const oldTicket = JSON.parse(localStorage.getItem('buys'))
       const buyTicket = JSON.parse(localStorage.getItem('buyTicket'))
       const userinfo = JSON.parse(localStorage.getItem('userinfo'))
       this.buyTicket = buyTicket
