@@ -245,9 +245,51 @@ export default {
       if (screenTemp.S2.length !== 0) { this.screen.push({ num: 'S2', size: '小', times: screenTemp.S2, id: id }) }
       if (screenTemp.S3.length !== 0) { this.screen.push({ num: 'S3', size: '小', times: screenTemp.S3, id: id }) }
       console.log(this.movieContent.id, this.selectedDate)
-      // this.firebase()
+      this.firebase()
       // console.log(this.screen)
+    },
+    async firebase() {
+      this.screen = []
+      const screenTemp = { L1: [], L2: [], L3: [], M1: [], M2: [], S1: [], S2: [], S3: [] }
+      const db = getFirestore(app)
+      const querySnapshot = await getDocs(query(collection(db, 'schedule')))
+      console.log(querySnapshot)
+      querySnapshot.forEach((doc) => {
+        const S = doc.data().timeS.toString()
+        const E = doc.data().timeE.toString()
+        const Sr = S.slice(0, 2) + ':' + S.slice(2, 4)
+        const Er = E.slice(0, 2) + ':' + E.slice(2, 4)
+        if (doc.data().screen === 'L1') { screenTemp.L1.push({ start: Sr, end: Er }) }
+        if (doc.data().screen === 'L2') { screenTemp.L2.push({ start: Sr, end: Er }) }
+        if (doc.data().screen === 'L3') { screenTemp.L3.push({ start: Sr, end: Er }) }
+        if (doc.data().screen === 'M1') { screenTemp.M1.push({ start: Sr, end: Er }) }
+        if (doc.data().screen === 'M2') { screenTemp.M2.push({ start: Sr, end: Er }) }
+        if (doc.data().screen === 'S1') { screenTemp.S1.push({ start: Sr, end: Er }) }
+        if (doc.data().screen === 'S2') { screenTemp.S2.push({ start: Sr, end: Er }) }
+        if (doc.data().screen === 'S3') { screenTemp.S3.push({ start: Sr, end: Er }) }
+      })
+      if (screenTemp.L1.length !== 0) { this.screen.push({ num: 'L1', size: '大', times: screenTemp.L1 }) }
+      if (screenTemp.L2.length !== 0) { this.screen.push({ num: 'L2', size: '大', times: screenTemp.L2 }) }
+      if (screenTemp.L3.length !== 0) { this.screen.push({ num: 'L3', size: '大', times: screenTemp.L3 }) }
+      if (screenTemp.M1.length !== 0) { this.screen.push({ num: 'M1', size: '中', times: screenTemp.M1 }) }
+      if (screenTemp.M2.length !== 0) { this.screen.push({ num: 'M2', size: '中', times: screenTemp.M2 }) }
+      if (screenTemp.S1.length !== 0) { this.screen.push({ num: 'S1', size: '小', times: screenTemp.S1 }) }
+      if (screenTemp.S2.length !== 0) { this.screen.push({ num: 'S2', size: '小', times: screenTemp.S2 }) }
+      if (screenTemp.S3.length !== 0) { this.screen.push({ num: 'S3', size: '小', times: screenTemp.S3 }) }
     }
+  },
+  created() {
+    // 将数据存到localStorage和vuex
+    const storedData = JSON.parse(localStorage.getItem('movieData'))
+    this.movieContent = (typeof this.$store.state.tab.movieList === 'object' && Object.keys(this.$store.state.tab.movieList).length === 0) ? storedData : this.$store.state.tab.movieList
+    this.items = this.dates
+    // 当页面渲染的时候自定点击
+    this.$nextTick(() => {
+      this.$refs.myTabs.setCurrentName('1')
+    })
+
+    // 获得Movie传来的数据
+    this.data = this.$route.params.data
   },
   computed: {
     // 数组slice选出开头和结尾的时间

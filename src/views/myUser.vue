@@ -18,12 +18,13 @@
         </el-tab-pane>
         <el-tab-pane>
           <span slot="label"><i class="iconfont icon-goumaijilu"></i> 購入履歴</span>
-          <el-descriptions v-for="item in ticketInfo" :key="item.id" class="margin-top" :column="3"
-            style="margin-top: 20px;" border>
-            <!-- <template slot="extra">
-              <el-button type="primary" size="small">操作</el-button>
-            </template> -->
-            <el-descriptions-item>
+          <el-descriptions v-for="(item, index) in ticketInfo" :key="index" class="margin-top" :column="4"
+            style="margin-top: 20px;" border direction="vertical">
+            <template slot="extra">
+              <span style="position: absolute; left: 20px;margin-top: 15px;">購入日時 : {{ item.timestamp }}</span>
+              <el-button type="primary" size="small" @click="ticketdetail(item, index)">詳細</el-button>
+            </template>
+            <el-descriptions-item content-class-name="my-content">
               <template slot="label">
                 <i class="iconfont icon-dianying"></i>
                 作品名
@@ -46,33 +47,51 @@
             </el-descriptions-item>
             <el-descriptions-item>
               <template slot="label">
-                <i class="el-icon-tickets"></i>
-                座席・券種
-              </template>
-              <span v-for="(seat, index) in item.seat" :key="index">
-                {{ seat }}
-                <span v-if="index < item.seat.length - 1">, </span>
-              </span>
-              <!-- {{ item.name }}&nbsp;&nbsp;&nbsp;{{ item.ticketName }} -->
-            </el-descriptions-item>
-            <el-descriptions-item>
-              <template slot="label">
-                <i class="el-icon-money"></i>
-                金額
-              </template>
-              {{ item.ticketMoney }}
-            </el-descriptions-item>
-            <el-descriptions-item>
-              <template slot="label">
                 <i class="el-icon-office-building"></i>
                 劇場
               </template>
               HAL シネマズ
             </el-descriptions-item>
           </el-descriptions>
+          <el-pagination style="margin-top: 20px;" :page-size="20" :pager-count="11" layout="prev, pager, next"
+            :total="1">
+          </el-pagination>
         </el-tab-pane>
       </el-tabs>
     </div>
+    <el-dialog title="チケット一覧" :visible.sync="dialogVisible" width="40%" :before-close="handleClose">
+      <el-descriptions v-for="(item, index) in detail.seat" :key="index" class="margin-top" :column="2"
+        style="margin-top: 20px;" border>
+        <el-descriptions-item content-class-name="my-seat">
+          <template slot="label">
+            <i class="el-icon-tickets"></i>
+            座席・券種
+          </template>
+          {{ item }}&nbsp;&nbsp;・&nbsp;&nbsp;{{ seat[index].ticketName }}
+        </el-descriptions-item>
+        <el-descriptions-item>
+          <template slot="label">
+            <i class="el-icon-money"></i>
+            金額
+          </template>
+          {{ seat[index].ticketMoney }}円
+        </el-descriptions-item>
+      </el-descriptions>
+      <el-descriptions class="margin-top" :column="2"
+        style="margin-top: 20px;" border>
+        <el-descriptions-item content-class-name="my-seat" :contentStyle="{'text-align': 'right','padding-right':'33px'}">
+          <template slot="label" >
+            <i class="el-icon-shopping-bag-2"></i>
+            合計金額
+          </template>
+          {{ totalMoney }}円
+        </el-descriptions-item>
+      </el-descriptions>
+      <!-- <div style="position: absolute; right: 50px; margin-top: 20px;" >合計:{{ totalMoney }}円</div> -->
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -87,10 +106,14 @@ export default {
     return {
       // 假设的数据
       ticketInfo: [],
+      detail: [],
+      seat: [],
+      totalMoney: '',
       movieName: '',
       screend: '',
       seeTime: {},
-      userName: null
+      userName: null,
+      dialogVisible: false
     }
   },
   components: {
@@ -104,37 +127,53 @@ export default {
         const db = getFirestore(app)
         const QueryUsername = await getDoc(doc(db, 'user', userID))
         this.userName = QueryUsername.data().name
-        console.log(QueryUsername.data().name)
+        // console.log(QueryUsername.data().name)
 
         const QueryTicket = await getDocs(query(collection(db, 'ticket'), where('user', '==', userID)))
-        console.log(QueryTicket)
+        // console.log(QueryTicket)
         QueryTicket.forEach((doc) => {
           this.ticketInfo.push(doc.data())
         })
+
+        this.ticketInfo.sort((a, b) => {
+          const timestampA = a.nowTime.seconds * 1000 + a.nowTime.nanoseconds / 1000000
+          const timestampB = b.nowTime.seconds * 1000 + b.nowTime.nanoseconds / 1000000
+          return timestampB - timestampA
+        })
+        // this.seat = this.ticketInfo.seat
       } else {
         // user is dont login
         console.log('dont login')
       }
     })
+    // console.log(this.ticketInfo)
   },
   methods: {
-    getInfo() {
-      // 假设的数据
-      // const info = JSON.parse(localStorage.getItem('buyTicket'))
-      // this.movieName = info.title
-      // this.screend = info.screen
-      // this.seeTime = info.date
-      // this.ticketInfo = info
-      // console.log(this.seeTime)
+    // getInfo() {
+    //   // 假设的数据
+    //   const info = JSON.parse(localStorage.getItem('buys'))
+    //   this.ticketInfo = info
+    //   // console.log(this.ticketInfo)
+    // },
+    ticketdetail(e, index) {
+      // console.log(e)
+      this.detail = e
+      this.seat = e.seatType
+      this.totalMoney = e.ticketMoney
+      // console.log(this.totalMoney)
+      this.dialogVisible = true
+    },
+    handleClose() {
+      this.dialogVisible = false
     }
   },
   created() {
-    this.getInfo()
+    // this.getInfo()
   }
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .userDetail {
   margin: auto;
   width: 80%;
@@ -143,5 +182,13 @@ export default {
 
 .buyList {
   margin-bottom: 100px;
+}
+
+.my-content {
+  width: 500px
+}
+
+.my-seat {
+  width: 200px;
 }
 </style>

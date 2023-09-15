@@ -45,7 +45,7 @@ export default {
   .cinemasContent {
     margin-top: 100px;
     width: 100%;
-    height: 500px;
+    height: 400px;
     background-color: #292929;
     padding: 20px;
     display: flex;
