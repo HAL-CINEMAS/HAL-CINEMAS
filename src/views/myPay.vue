@@ -117,33 +117,34 @@ export default {
       const buyTicket = JSON.parse(localStorage.getItem('buyTicket'))
       const userinfo = JSON.parse(localStorage.getItem('userinfo'))
       this.buyTicket = buyTicket
+      console.log(buyTicket)
       this.userinfo = userinfo
-      console.log(this.buyTicket)
     },
 
     addticket() {
       let date = this.buyTicket.date
       date = `${date.mounth}月${date.day}日 (${date.week}) ${date.start}~${date.end}`
-      const day = ['日', '月', '火', '水', '木', '金', '土']
-      let timestamp = new Date()
-      timestamp = `${Number(timestamp.getMonth()) + 1}月${timestamp.getDate()}日 (${day[timestamp.getDay()]}) ${timestamp.getHours()}:${('0' + timestamp.getMinutes()).slice(-2)}`
       addDoc(collection(db, 'ticket'), {
         user: this.loginid,
         movie: this.buyTicket.title,
         screen: this.buyTicket.screen,
-        seat: this.buyTicket.seatSelect,
+        seatType: this.buyTicket.ticket,
         ticketMoney: this.buyTicket.account,
         cinema: 'HAL シネマズ',
         date: date,
-        timestamp: timestamp
+        timestamp: new Date()
       }).catch((error) => {
         const errorCode = error.code
         const errorMessage = error.message
         console.log(errorCode)
         console.log(errorMessage)
       })
-      setDoc(doc(db, 'seats', this.buyTicket.scheduleId))
+      console.log(this.buyTicket.seatSelectNum)
+      setDoc(doc(db, 'seats', this.buyTicket.scheduleId), {
+        timestamp: new Date()
+      })
       this.buyTicket.seatSelectNum.forEach(item => {
+        console.log(item)
         updateDoc(doc(db, 'seats', this.buyTicket.scheduleId), {
           seat: arrayUnion(item)
         }).catch((error) => {

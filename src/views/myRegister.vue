@@ -41,7 +41,7 @@ export default {
 
   .registerContent {
     margin: 100px auto 100px auto;
-    width: 70%;
+    width: 50%;
     // height: 500px;
     padding: 30px 50px;
 

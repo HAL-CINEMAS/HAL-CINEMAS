@@ -54,6 +54,18 @@ export default {
   },
   methods: {
     submitForm(formName) {
+      // this.$refs[formName].validate((valid) => {
+      //   if (valid) {
+      //     this.$router.push({
+      //       name: 'user'
+      //     })
+      //     console.log(formName)
+      //   } else {
+      //     console.log('error submit!!')
+      //     return false
+      //   }
+      // })
+
       const auth = getAuth(app)
       const email = this.ruleForm.mail
       const password = this.ruleForm.ps
@@ -79,7 +91,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-// @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap');
 
 .login {
   background-color: #ffffff;
