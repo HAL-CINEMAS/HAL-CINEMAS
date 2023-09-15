@@ -118,7 +118,6 @@ export default {
       const userinfo = JSON.parse(localStorage.getItem('userinfo'))
       this.buyTicket = buyTicket
       this.userinfo = userinfo
-      console.log(this.buyTicket)
     },
 
     addticket() {

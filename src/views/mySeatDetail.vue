@@ -21,9 +21,7 @@
         }
           ">
           <!-- 动态显示被购买的座位 -->
-          <i v-if="seat.buy === false" class="iconfont icon-zuowei"
-            v-on:click="!NoSelect.includes(seat.label) && selectSeat(rowIndex, columnIndex, seat)"></i>
-          <!-- <i v-else-if="NoSelect.includes(seat.label)"></i> -->
+          <i v-if="seat.buy === false" class="iconfont icon-zuowei" @click="selectSeat(rowIndex, columnIndex, seat)"></i>
           <i v-else disabled class="iconfont icon-zuowei1" style="pointer-events: none;" @click.stop></i>
         </div>
       </div>
@@ -190,7 +188,6 @@ export default {
       return this.selected.length === 0
     }
   }
-
 }
 </script>
 
@@ -468,13 +465,5 @@ export default {
 
 .selected {
   color: red;
-}
-
-.disabled {
-  background-color: yellow; // 将座位的背景色设为黄色
-}
-
-.icon-small {
-  display: none;
 }
 </style>

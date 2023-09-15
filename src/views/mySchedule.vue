@@ -245,7 +245,7 @@ export default {
       if (screenTemp.S2.length !== 0) { this.screen.push({ num: 'S2', size: '小', times: screenTemp.S2, id: id }) }
       if (screenTemp.S3.length !== 0) { this.screen.push({ num: 'S3', size: '小', times: screenTemp.S3, id: id }) }
       console.log(this.movieContent.id, this.selectedDate)
-      this.firebase()
+      // this.firebase()
       // console.log(this.screen)
     }
   },
