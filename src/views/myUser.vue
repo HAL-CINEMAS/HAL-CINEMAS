@@ -2,7 +2,7 @@
   <div>
     <Premium></Premium>
     <div class="userDetail">
-      <el-card>{{ userName }}さんのマイページ</el-card>
+      <el-card>ウーさんのマイページ</el-card>
       <el-tabs type="border-card" class="buyList">
         <el-tab-pane>
           <span slot="label"><i class="iconfont icon-shoucang3"></i> みたい</span>
@@ -60,14 +60,14 @@
       </el-tabs>
     </div>
     <el-dialog title="チケット一覧" :visible.sync="dialogVisible" width="40%" :before-close="handleClose">
-      <el-descriptions v-for="(item, index) in detail.seat" :key="index" class="margin-top" :column="2"
+      <el-descriptions v-for="(item, index) in detail.seatType" :key="index" class="margin-top" :column="2"
         style="margin-top: 20px;" border>
         <el-descriptions-item content-class-name="my-seat">
           <template slot="label">
             <i class="el-icon-tickets"></i>
             座席・券種
           </template>
-          {{ item }}&nbsp;&nbsp;・&nbsp;&nbsp;{{ seat[index].ticketName }}
+          {{ item.name }}&nbsp;&nbsp;・&nbsp;&nbsp;{{ seat[index].ticketName }}
         </el-descriptions-item>
         <el-descriptions-item>
           <template slot="label">
@@ -89,7 +89,7 @@
       </el-descriptions>
       <!-- <div style="position: absolute; right: 50px; margin-top: 20px;" >合計:{{ totalMoney }}円</div> -->
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="dialogVisible = false">確 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -98,7 +98,7 @@
 <script>
 import Premium from '../components/myPremium.vue'
 import app from '@/api/firebase.js'
-import { getFirestore, getDoc, getDocs, doc, query, collection, where } from 'firebase/firestore'
+import { getFirestore, getDoc, getDocs, doc, query, collection, where, orderBy } from 'firebase/firestore'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 export default {
   name: 'myUser',
@@ -129,16 +129,10 @@ export default {
         this.userName = QueryUsername.data().name
         // console.log(QueryUsername.data().name)
 
-        const QueryTicket = await getDocs(query(collection(db, 'ticket'), where('user', '==', userID)))
+        const QueryTicket = await getDocs(query(collection(db, 'ticket'), where('user', '==', userID), orderBy('timestamp', 'asc')))
         // console.log(QueryTicket)
         QueryTicket.forEach((doc) => {
           this.ticketInfo.push(doc.data())
-        })
-
-        this.ticketInfo.sort((a, b) => {
-          const timestampA = a.nowTime.seconds * 1000 + a.nowTime.nanoseconds / 1000000
-          const timestampB = b.nowTime.seconds * 1000 + b.nowTime.nanoseconds / 1000000
-          return timestampB - timestampA
         })
         // this.seat = this.ticketInfo.seat
       } else {
@@ -156,7 +150,8 @@ export default {
     //   // console.log(this.ticketInfo)
     // },
     ticketdetail(e, index) {
-      // console.log(e)
+      console.log(e)
+      console.log(index)
       this.detail = e
       this.seat = e.seatType
       this.totalMoney = e.ticketMoney
