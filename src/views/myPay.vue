@@ -82,7 +82,7 @@
 import SeatNav from '../components/mySeatNav.vue'
 import app from '@/api/firebase.js'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { getFirestore, collection, addDoc, updateDoc, doc, arrayUnion, setDoc } from 'firebase/firestore'
+import { getFirestore, collection, addDoc, updateDoc, doc, arrayUnion } from 'firebase/firestore'
 const db = getFirestore(app)
 export default {
   name: 'myPay',
@@ -114,7 +114,6 @@ export default {
   },
   methods: {
     getbuyTicket() {
-      const oldTicket = JSON.parse(localStorage.getItem('buys'))
       const buyTicket = JSON.parse(localStorage.getItem('buyTicket'))
       const userinfo = JSON.parse(localStorage.getItem('userinfo'))
       this.buyTicket = buyTicket
@@ -143,15 +142,10 @@ export default {
         console.log(errorCode)
         console.log(errorMessage)
       })
-      setDoc(doc(db, 'seats', this.buyTicket.scheduleId))
-      this.buyTicket.seatSelectNum.forEach(item => {
-        updateDoc(doc(db, 'seats', this.buyTicket.scheduleId), {
+      const seatsDoc = doc(db, 'seats', this.buyTicket.scheduleId)
+      this.buyTicket.seatSelectNum.forEach((item) => {
+        updateDoc(seatsDoc, {
           seat: arrayUnion(item)
-        }).catch((error) => {
-          const errorCode = error.code
-          const errorMessage = error.message
-          console.log(errorCode)
-          console.log(errorMessage)
         })
       })
       this.$router.push('/payend')

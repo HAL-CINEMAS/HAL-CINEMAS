@@ -1,15 +1,15 @@
 <template>
-  <div class="movie">
-    <div class="movieTop">
-      <div class="movieTitle">
+  <div class='movie'>
+    <div class='movieTop'>
+      <div class='movieTitle'>
         {{ this.movieContent.title }}
       </div>
-      <div class="movieContent">
-        <div class="movieContentLeft">
-          <img :src="require(`../assets/images/${this.movieContent.img}`)" alt="">
+      <div class='movieContent'>
+        <div class='movieContentLeft'>
+          <img :src='require(`../assets/images/${this.movieContent.img}`)' alt=''>
         </div>
-        <div class="movieContentRight">
-          <h3 class="subTitle">{{ this.movieContent.subtitle }}</h3>
+        <div class='movieContentRight'>
+          <h3 class='subTitle'>{{ this.movieContent.subtitle }}</h3>
           <p><span>公開</span>{{ this.movieContent.data }}</p>
           <p><span>監督</span>{{ this.movieContent.regulator }}</p>
           <p><span>出演</span><br>{{ this.movieContent.performers }}</p>
@@ -19,49 +19,49 @@
         </div>
       </div>
     </div>
-    <div class="movieMiddle">
-      <div class="scheduleTitle"><span>上映スケジュール</span></div>
-      <div class="movieTop">
+    <div class='movieMiddle'>
+      <div class='scheduleTitle'><span>上映スケジュール</span></div>
+      <div class='movieTop'>
         <h3><span>上映中の劇場一覧</span><span>Theater List In Screening</span></h3>
       </div>
-      <div class="scheduleContent">
-        <el-tabs v-model="activeName" type="card" @tab-click="handleClick" ref="myTabs">
-          <el-tab-pane label="中部" name="1">
-            <div class="scheduleItem">
+      <div class='scheduleContent'>
+        <el-tabs v-model='activeName' type='card' @tab-click='handleClick' ref='myTabs'>
+          <el-tab-pane label='中部' name='1'>
+            <div class='scheduleItem'>
               <el-collapse accordion>
                 <el-collapse-item>
-                  <template slot="title">
-                    <div style="width: 100%;padding-bottom: 10px;border-bottom: 1px solid #bdbdbd;" @click="show">
-                      <p class="city">[名古屋市]</p>
-                      <p class="cinemas">HALシネマズ</p>
+                  <template slot='title'>
+                    <div style='width: 100%;padding-bottom: 10px;border-bottom: 1px solid #bdbdbd;' @click='show'>
+                      <p class='city'>[名古屋市]</p>
+                      <p class='cinemas'>HALシネマズ</p>
                     </div>
                   </template>
-                  <div class="times">
-                    <div class="timesTop">
-                      <i class="el-icon-caret-left leftRight" @click="moveLeft" :disabled="leftButtonDisabled"></i>
-                      <div class="content">
-                        <span class="times" v-for="(item, index) in displayedItems" :key="index"
-                          :class="{ active: activeIndex === index }" @click="changeColor(item, index)" ref="timess">
-                          <span class="months">
+                  <div class='times'>
+                    <div class='timesTop'>
+                      <i class='el-icon-caret-left leftRight' @click='moveLeft' :disabled='leftButtonDisabled'></i>
+                      <div class='content'>
+                        <span class='times' v-for='(item, index) in displayedItems' :key='index'
+                          :class='{ active: activeIndex === index }' @click='changeColor(item, index)' ref='timess'>
+                          <span class='months'>
                             {{ getLeftPart(item) }}
                           </span>/
-                          <span class="days">{{ getRightPart(item) }}</span>
-                          <span style="font-size: 15px;">({{ getWeekday(item) }})</span>
+                          <span class='days'>{{ getRightPart(item) }}</span>
+                          <span style='font-size: 15px;'>({{ getWeekday(item) }})</span>
                         </span>
                       </div>
-                      <i class="el-icon-caret-right leftRight" @click="moveRight" :disabled="rightButtonDisabled"></i>
+                      <i class='el-icon-caret-right leftRight' @click='moveRight' :disabled='rightButtonDisabled'></i>
                     </div>
-                    <div class="timesContent" v-if="selectedDate">
+                    <div class='timesContent' v-if='selectedDate'>
                       <p>{{ getLeftPart(this.selectedDate) }}月{{ getRightPart(this.selectedDate) }}日({{
                         getWeekday(this.selectedDate) }})</p>
                       <h3>{{ this.movieContent.title }}（字幕版）</h3>
-                      <div class="screen" v-for="(item, index) in screen" :key="index">
-                        <p class="screenTop"><i>{{ item.size }}</i> SCREEN{{ item.num }}</p>
-                        <div class="screenContent" v-for="(detail, index) in item.times" :key="index"
-                          @click="buyTicket(detail, item)">
-                          <i class="startTime">{{ detail.start }}</i>
-                          <i class="endTime">~&nbsp;&nbsp;&nbsp;{{ detail.end }}</i>
-                          <i class="selling"><i class="el-icon-sunny">&nbsp;</i>販売中</i>
+                      <div class='screen' v-for='(item, index) in screen' :key='index'>
+                        <p class='screenTop'><i>{{ item.size }}</i> SCREEN{{ item.num }}</p>
+                        <div class='screenContent' v-for='(detail, index) in item.times' :key='index'
+                          @click='buyTicket(detail, item)'>
+                          <i class='startTime'>{{ detail.start }}</i>
+                          <i class='endTime'>~&nbsp;&nbsp;&nbsp;{{ detail.end }}</i>
+                          <i class='selling'><i class='el-icon-sunny'>&nbsp;</i>販売中</i>
                         </div>
                       </div>
                     </div>
@@ -70,16 +70,16 @@
               </el-collapse>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="東北" name="2">東北(お楽しみに)</el-tab-pane>
-          <el-tab-pane label="関東" name="3">関東(お楽しみに)</el-tab-pane>
-          <el-tab-pane label="関西" name="4">関西(お楽しみに)</el-tab-pane>
-          <el-tab-pane label="中国" name="5">中国(お楽しみに)</el-tab-pane>
-          <el-tab-pane label="四国" name="6">四国(お楽しみに)</el-tab-pane>
-          <el-tab-pane label="九州" name="7">九州(お楽しみに)</el-tab-pane>
+          <el-tab-pane label='東北' name='2'>東北(お楽しみに)</el-tab-pane>
+          <el-tab-pane label='関東' name='3'>関東(お楽しみに)</el-tab-pane>
+          <el-tab-pane label='関西' name='4'>関西(お楽しみに)</el-tab-pane>
+          <el-tab-pane label='中国' name='5'>中国(お楽しみに)</el-tab-pane>
+          <el-tab-pane label='四国' name='6'>四国(お楽しみに)</el-tab-pane>
+          <el-tab-pane label='九州' name='7'>九州(お楽しみに)</el-tab-pane>
         </el-tabs>
       </div>
     </div>
-    <div class="movieBottom">
+    <div class='movieBottom'>
       <div>上映中作品一覧はこちら</div>
       <div>公開予定作品一覧はこちら</div>
     </div>
@@ -158,7 +158,6 @@ export default {
         ticket: null,
         account: null
       })
-      console.log(buyDetail)
       localStorage.setItem('buyTicket', buyDetail)
       this.$router.push({
         name: 'seat'
@@ -204,7 +203,6 @@ export default {
     changeColor(item, index) {
       this.activeIndex = index
       this.selectedDate = item
-      // console.log(this.movieContent.id, this.selectedDate)
       this.firebase()
     },
     async firebase() {
@@ -222,10 +220,11 @@ export default {
       const querySnapshot = await getDocs(query(collection(db, 'schedule'), orderBy('date', 'asc'), startAt(selectTimestampStart), endAt(selectTimestampEnd)))
       let id = null
       querySnapshot.forEach((doc) => {
-        const S = doc.data().timeS.toString()
-        const E = doc.data().timeE.toString()
-        const Sr = S.slice(0, 2) + ':' + S.slice(2, 4)
-        const Er = E.slice(0, 2) + ':' + E.slice(2, 4)
+        console.log(doc.data())
+        const S = doc.data().date.toDate()
+        const E = doc.data().end.toDate()
+        const Sr = S.getHours() + ':' + S.getMinutes()
+        const Er = E.getHours() + ':' + E.getMinutes()
         if (doc.data().screen === 'L1') { screenTemp.L1.push({ start: Sr, end: Er }) }
         if (doc.data().screen === 'L2') { screenTemp.L2.push({ start: Sr, end: Er }) }
         if (doc.data().screen === 'L3') { screenTemp.L3.push({ start: Sr, end: Er }) }
@@ -244,52 +243,7 @@ export default {
       if (screenTemp.S1.length !== 0) { this.screen.push({ num: 'S1', size: '小', times: screenTemp.S1, id: id }) }
       if (screenTemp.S2.length !== 0) { this.screen.push({ num: 'S2', size: '小', times: screenTemp.S2, id: id }) }
       if (screenTemp.S3.length !== 0) { this.screen.push({ num: 'S3', size: '小', times: screenTemp.S3, id: id }) }
-      console.log(this.movieContent.id, this.selectedDate)
-      this.firebase()
-      // console.log(this.screen)
-    },
-    async firebase() {
-      this.screen = []
-      const screenTemp = { L1: [], L2: [], L3: [], M1: [], M2: [], S1: [], S2: [], S3: [] }
-      const db = getFirestore(app)
-      const querySnapshot = await getDocs(query(collection(db, 'schedule')))
-      console.log(querySnapshot)
-      querySnapshot.forEach((doc) => {
-        const S = doc.data().timeS.toString()
-        const E = doc.data().timeE.toString()
-        const Sr = S.slice(0, 2) + ':' + S.slice(2, 4)
-        const Er = E.slice(0, 2) + ':' + E.slice(2, 4)
-        if (doc.data().screen === 'L1') { screenTemp.L1.push({ start: Sr, end: Er }) }
-        if (doc.data().screen === 'L2') { screenTemp.L2.push({ start: Sr, end: Er }) }
-        if (doc.data().screen === 'L3') { screenTemp.L3.push({ start: Sr, end: Er }) }
-        if (doc.data().screen === 'M1') { screenTemp.M1.push({ start: Sr, end: Er }) }
-        if (doc.data().screen === 'M2') { screenTemp.M2.push({ start: Sr, end: Er }) }
-        if (doc.data().screen === 'S1') { screenTemp.S1.push({ start: Sr, end: Er }) }
-        if (doc.data().screen === 'S2') { screenTemp.S2.push({ start: Sr, end: Er }) }
-        if (doc.data().screen === 'S3') { screenTemp.S3.push({ start: Sr, end: Er }) }
-      })
-      if (screenTemp.L1.length !== 0) { this.screen.push({ num: 'L1', size: '大', times: screenTemp.L1 }) }
-      if (screenTemp.L2.length !== 0) { this.screen.push({ num: 'L2', size: '大', times: screenTemp.L2 }) }
-      if (screenTemp.L3.length !== 0) { this.screen.push({ num: 'L3', size: '大', times: screenTemp.L3 }) }
-      if (screenTemp.M1.length !== 0) { this.screen.push({ num: 'M1', size: '中', times: screenTemp.M1 }) }
-      if (screenTemp.M2.length !== 0) { this.screen.push({ num: 'M2', size: '中', times: screenTemp.M2 }) }
-      if (screenTemp.S1.length !== 0) { this.screen.push({ num: 'S1', size: '小', times: screenTemp.S1 }) }
-      if (screenTemp.S2.length !== 0) { this.screen.push({ num: 'S2', size: '小', times: screenTemp.S2 }) }
-      if (screenTemp.S3.length !== 0) { this.screen.push({ num: 'S3', size: '小', times: screenTemp.S3 }) }
     }
-  },
-  created() {
-    // 将数据存到localStorage和vuex
-    const storedData = JSON.parse(localStorage.getItem('movieData'))
-    this.movieContent = (typeof this.$store.state.tab.movieList === 'object' && Object.keys(this.$store.state.tab.movieList).length === 0) ? storedData : this.$store.state.tab.movieList
-    this.items = this.dates
-    // 当页面渲染的时候自定点击
-    this.$nextTick(() => {
-      this.$refs.myTabs.setCurrentName('1')
-    })
-
-    // 获得Movie传来的数据
-    this.data = this.$route.params.data
   },
   computed: {
     // 数组slice选出开头和结尾的时间
@@ -322,7 +276,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang='less' scoped>
 .movie {
   display: flex;
   flex-direction: column;
@@ -489,7 +443,7 @@ export default {
         }
 
         /deep/.el-icon-arrow-right:before {
-          content: "\e6dc";
+          content: '\e6dc';
           display: inline;
           position: relative;
           top: -5px;

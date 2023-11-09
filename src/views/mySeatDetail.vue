@@ -22,7 +22,7 @@
           ">
           <!-- 动态显示被购买的座位 -->
           <i v-if="seat.buy === false" class="iconfont icon-zuowei"
-            v-on:click="!NoSelect.includes(seat.label) && selectSeat(rowIndex, columnIndex, seat)"></i>
+            v-on:click="selectSeat(rowIndex, columnIndex, seat)"></i>
           <!-- <i v-else-if="NoSelect.includes(seat.label)"></i> -->
           <i v-else disabled class="iconfont icon-zuowei1" style="pointer-events: none;" @click.stop></i>
         </div>
@@ -154,10 +154,10 @@ export default {
           return value !== seat.label
         })
         this.buySeatNum = this.buySeatNum.filter((value) => {
-          return value[0] !== rowIndex || value[1] !== columnIndex
+          return value !== rowIndex + ',' + columnIndex
         })
       }
-      // console.log(this.buySeatNum)
+      console.log(this.buySeatNum)
     },
     // 清楚选择座位
     selectClear() {

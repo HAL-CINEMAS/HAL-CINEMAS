@@ -109,8 +109,6 @@ export default {
       detail: [],
       seat: [],
       totalMoney: '',
-      movieName: '',
-      screend: '',
       seeTime: {},
       userName: null,
       dialogVisible: false
@@ -132,6 +130,7 @@ export default {
         const QueryTicket = await getDocs(query(collection(db, 'ticket'), where('user', '==', userID), orderBy('timestamp', 'asc')))
         // console.log(QueryTicket)
         QueryTicket.forEach((doc) => {
+          // TODO timestampを書き換える
           this.ticketInfo.push(doc.data())
         })
         // this.seat = this.ticketInfo.seat
