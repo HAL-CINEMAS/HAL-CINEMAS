@@ -90,7 +90,6 @@ export default {
     }
 
     this.NoSelect = buysTicket
-    // console.log(this.NoSelect)
     this.screen = buyTicket[1]
     this.screenFirst = buyTicket[1][0]
     if (this.screenFirst === 'L') {

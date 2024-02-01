@@ -54,7 +54,7 @@
                     <div class="timesContent" v-if="selectedDate">
                       <p>{{ getLeftPart(this.selectedDate) }}月{{ getRightPart(this.selectedDate) }}日({{
                         getWeekday(this.selectedDate) }})</p>
-                      <h3>{{ this.movieContent.title }}（字幕版）</h3>
+                      <h3>{{ this.movieContent.title }}</h3>
                       <div class="screen" v-for="(item, index) in screen" :key="index">
                         <p class="screenTop"><i>{{ item.size }}</i> SCREEN{{ item.num }}</p>
                         <div class="screenContent" v-for="(detail, index) in item.times" :key="index"
@@ -189,7 +189,7 @@ export default {
     changeColor(item, index) {
       this.activeIndex = index
       this.selectedDate = item
-      console.log(this.movieContent.id, this.selectedDate)
+      console.log(this.selectedDate)
       this.firebase()
       // console.log(this.screen)
     },
@@ -198,20 +198,29 @@ export default {
       const screenTemp = { L1: [], L2: [], L3: [], M1: [], M2: [], S1: [], S2: [], S3: [] }
       const db = getFirestore(app)
       const querySnapshot = await getDocs(query(collection(db, 'schedule')))
-      console.log(querySnapshot)
       querySnapshot.forEach((doc) => {
-        const S = doc.data().timeS.toString()
-        const E = doc.data().timeE.toString()
-        const Sr = S.slice(0, 2) + ':' + S.slice(2, 4)
-        const Er = E.slice(0, 2) + ':' + E.slice(2, 4)
-        if (doc.data().screen === 'L1') { screenTemp.L1.push({ start: Sr, end: Er }) }
-        if (doc.data().screen === 'L2') { screenTemp.L2.push({ start: Sr, end: Er }) }
-        if (doc.data().screen === 'L3') { screenTemp.L3.push({ start: Sr, end: Er }) }
-        if (doc.data().screen === 'M1') { screenTemp.M1.push({ start: Sr, end: Er }) }
-        if (doc.data().screen === 'M2') { screenTemp.M2.push({ start: Sr, end: Er }) }
-        if (doc.data().screen === 'S1') { screenTemp.S1.push({ start: Sr, end: Er }) }
-        if (doc.data().screen === 'S2') { screenTemp.S2.push({ start: Sr, end: Er }) }
-        if (doc.data().screen === 'S3') { screenTemp.S3.push({ start: Sr, end: Er }) }
+        console.log(doc.data())
+        console.log(this.movieContent.id)
+        if (this.movieContent.id === doc.data().movie_id) {
+          // if()
+          doc.data().data.forEach((item) => {
+            // 排序判断每个时间是否一样
+            if ((this.convertToShortDate(item.day) === this.selectedDate)) {
+              const S = item.date
+              const E = item.end
+              const Sr = this.removeSeconds(S)
+              const Er = this.removeSeconds(E)
+              if (item.screen === 'L1') { screenTemp.L1.push({ start: Sr, end: Er }) }
+              if (item.screen === 'L2') { screenTemp.L2.push({ start: Sr, end: Er }) }
+              if (item.screen === 'L3') { screenTemp.L3.push({ start: Sr, end: Er }) }
+              if (item.screen === 'M1') { screenTemp.M1.push({ start: Sr, end: Er }) }
+              if (item.screen === 'M2') { screenTemp.M2.push({ start: Sr, end: Er }) }
+              if (item.screen === 'S1') { screenTemp.S1.push({ start: Sr, end: Er }) }
+              if (item.screen === 'S2') { screenTemp.S2.push({ start: Sr, end: Er }) }
+              if (item.screen === 'S3') { screenTemp.S3.push({ start: Sr, end: Er }) }
+            }
+          })
+        }
       })
       if (screenTemp.L1.length !== 0) { this.screen.push({ num: 'L1', size: '大', times: screenTemp.L1 }) }
       if (screenTemp.L2.length !== 0) { this.screen.push({ num: 'L2', size: '大', times: screenTemp.L2 }) }
@@ -221,6 +230,22 @@ export default {
       if (screenTemp.S1.length !== 0) { this.screen.push({ num: 'S1', size: '小', times: screenTemp.S1 }) }
       if (screenTemp.S2.length !== 0) { this.screen.push({ num: 'S2', size: '小', times: screenTemp.S2 }) }
       if (screenTemp.S3.length !== 0) { this.screen.push({ num: 'S3', size: '小', times: screenTemp.S3 }) }
+    },
+    removeSeconds(timeString) {
+      const parts = timeString.split(':') // 通过 : 分割字符串
+      if (parts.length >= 2) {
+        // 如果分割后的部分大于等于2个（时钟和分钟）
+        return parts.slice(0, 2).join(':') // 只取前两部分（时钟和分钟）并用 : 连接起来
+      } else {
+        // 如果分割后的部分少于2个（只有时钟或者其他情况），直接返回原字符串
+        return timeString
+      }
+    },
+    convertToShortDate(dateString) {
+      const parts = dateString.split(/[年月日]/)
+      const month = parseInt(parts[1], 10)
+      const day = parseInt(parts[2], 10)
+      return `${month}/${day}`
     }
   },
   created() {

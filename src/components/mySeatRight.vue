@@ -52,6 +52,7 @@ export default {
 <style lang="less" scoped>
 .seatContentRight {
   margin-left: 20px;
+  width: 250px;
 
   p {
     font-size: 15px;
@@ -73,7 +74,6 @@ export default {
 
     .left {
       width: 30px;
-
       margin-right: 20px;
     }
   }

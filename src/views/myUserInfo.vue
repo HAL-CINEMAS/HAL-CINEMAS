@@ -3,10 +3,10 @@
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm"
       label-position="top">
       <div class="title">お名前<span>（※必須項目）</span></div>
-      <el-form-item label="漢字(姓)" prop="firstName">
+      <el-form-item label="姓" prop="firstName">
         <el-input v-model="ruleForm.firstName"></el-input>
       </el-form-item>
-      <el-form-item label="漢字(名)" prop="name">
+      <el-form-item label="名" prop="name">
         <el-input v-model="ruleForm.name"></el-input>
       </el-form-item>
       <el-form-item label="フリガナ(姓)" prop="KfirstName">
@@ -54,13 +54,13 @@ export default {
   data() {
     return {
       ruleForm: {
-        firstName: '',
-        name: '',
-        KfirstName: '',
-        KName: '',
-        phoneNum: '',
-        mail: '',
-        pay: ''
+        firstName: 'WU',
+        name: 'FAQIANG',
+        KfirstName: 'ウー',
+        KName: 'ファチャン',
+        phoneNum: '080-1111-1111',
+        mail: 'zl1234567@gmail.ccom',
+        pay: 'クレジットカード'
       },
       rules: {
         firstName: [

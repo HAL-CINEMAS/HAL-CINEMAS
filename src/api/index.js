@@ -16,6 +16,10 @@ async function fetchData() {
     const updatedData = { ...doc.data(), data: formattedDate, id: doc.id }
     datalist.push(updatedData)
   })
+
+  datalist.sort((a, b) => {
+    return a.data.localeCompare(b.data)
+  })
   return datalist
 }
 

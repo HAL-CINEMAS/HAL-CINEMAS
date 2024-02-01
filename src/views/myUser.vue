@@ -77,10 +77,10 @@
           {{ seat[index].ticketMoney }}円
         </el-descriptions-item>
       </el-descriptions>
-      <el-descriptions class="margin-top" :column="2"
-        style="margin-top: 20px;" border>
-        <el-descriptions-item content-class-name="my-seat" :contentStyle="{'text-align': 'right','padding-right':'33px'}">
-          <template slot="label" >
+      <el-descriptions class="margin-top" :column="2" style="margin-top: 20px;" border>
+        <el-descriptions-item content-class-name="my-seat"
+          :contentStyle="{ 'text-align': 'right', 'padding-right': '33px' }">
+          <template slot="label">
             <i class="el-icon-shopping-bag-2"></i>
             合計金額
           </template>
@@ -129,7 +129,8 @@ export default {
         // console.log(QueryUsername.data().name)
 
         const QueryTicket = await getDocs(query(collection(db, 'ticket'), where('user', '==', userID)))
-        // console.log(QueryTicket)
+        console.log(QueryTicket)
+        console.log('aaaaaaaaaaa')
         QueryTicket.forEach((doc) => {
           this.ticketInfo.push(doc.data())
         })

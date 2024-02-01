@@ -195,7 +195,11 @@ export default {
       color: #fff;
       // overflow: hidden;
       font-family: Poppins, sans-serif;
+    }
 
+    .front img {
+      width: 234px;
+      height: 331px;
     }
 
     .back {
